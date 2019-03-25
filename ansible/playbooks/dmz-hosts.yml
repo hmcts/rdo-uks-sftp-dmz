@@ -1,0 +1,64 @@
+---
+- name: All Hosts
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: add folder
+      win_file:
+        path: C:\globalscape
+        state: directory
+
+- name: DMZ Hosts
+  hosts: dmz
+  gather_facts: false
+  tasks:
+    - name: Checking DMZ Software is Downloaded
+      win_stat: 
+        path: 'C:/globalscape/dmz-gateway-windows-x86-64.exe' 
+      register: dmz_download
+
+    - name: DMZ software download
+      win_get_url:
+        url: ftp://ftp.globalscape.com/bin/files/dmz/dmz-gateway-windows-x86-64.exe
+        dest: C:\globalscape\dmz-gateway-windows-x86-64.exe
+      when: dmz_download.stat.exists == False
+
+    - name: Checking DMZ Software is installed
+      win_stat: 
+        path: 'C:\Program Files\GlobalSCAPE\DMZ Gateway\bin\DMZGatewayServerService.exe' 
+      register: dmz_installed
+
+    - name: Silent Install DMZ Software
+      win_package:
+        path: C:\globalscape\dmz-gateway-windows-x86-64.exe
+        product_id: '{9229C8A0-8E85-11DE-94AD-0002A5D5C51B}'
+        arguments: /S
+        state: present
+      when: dmz_installed.stat.exists == False
+
+    - name: Start DMZ Service and set to Auto
+      win_service:
+        name: 'DMZ Gateway Server Service'
+        start_mode: auto
+        state: started
+        
+    - name: Firewall rule to allow DMZ on TCP port 44500
+      win_firewall_rule:
+        name: DMZ_44500
+        localport: 44500
+        action: allow
+        direction: in
+        protocol: tcp
+        state: present
+        enabled: yes
+
+    - name: SFTP_Port_22
+      win_firewall_rule:
+        name: SFTP_Port_22
+        localport: 22
+        action: allow
+        direction: in
+        protocol: tcp
+        state: present
+        enabled: yes
+        
