@@ -3,13 +3,13 @@ provider "azurerm" {
 }
 
 provider "http" {
-  version         = "=1.0"
+  version         = ">=1.0"
 }
 
 provider "null" {
-  version         = ">2.1"
+  version         = ">=2.1"
 }
 
 provider "template" {
-  version         = ">2.1"
+  version         = ">=2.1"
 }

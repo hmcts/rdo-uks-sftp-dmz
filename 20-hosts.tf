@@ -193,8 +193,7 @@ resource "azurerm_virtual_machine_extension" "ansible_extension" {
   settings = <<SETTINGS
     {
         "commandToExecute": "sudo apt-add-repository --yes --update ppa:ansible/ansible",
-        "commandToExecute": "sudo apt-get update",
-        "commandToExecute": "sudo apt install -y software-properties-common ansible libssl-dev libffi-dev python-dev python-pip && sudo pip install pywinrm && sudo pip install azure-keyvault"
+        "commandToExecute": "sudo apt-get update && sudo apt install -y software-properties-common ansible libssl-dev libffi-dev python-dev python-pip && sudo pip install pywinrm && sudo pip install azure-keyvault"
     }
 SETTINGS
 }
@@ -252,7 +251,7 @@ resource "null_resource" "ansible-runs" {
 
   provisioner "remote-exec" {
     inline = [
-      "ansible-playbook -i ~/ansible/inventory ~/ansible/playbooks/dmz-hosts.yml"
+      "ansible-playbook -i ~/ansible/inventory ~/ansible/playbooks/dmz-hosts.yml --extra-vars 'smtp_email=${var.smtp_email_address}' --extra-vars 'smtp_pass=${var.smtp_password}'"
     ]
 
     connection {

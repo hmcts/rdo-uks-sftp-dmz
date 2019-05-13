@@ -1,18 +1,18 @@
 
 variable "name" {
-  default = ""  #"__name__"
+  description = "Name of Service"  #"__name__"
 }
 
 variable "location" {
-  default = "" #"__location__"
+  description = "Location" #"__location__"
 }
 
 variable "key_vault_uri" {
-  default =  "" #"https://__name__-kvs.vault.azure.net/"
+  description =  "Please use when setup in pipeline" #"https://__name__-kvs.vault.azure.net/"
 }
 
 variable "virtual_machine_name" {
-  default =  "" #"__name__-vm"
+  description =  "Please use when setup in pipeline" #"__name__-vm"
 }
 
 variable "vm_count" {
@@ -22,3 +22,12 @@ variable "vm_count" {
 variable "vnet" {
   default = "10.97."
 }
+
+variable "smtp_email_address" {
+  description = "Smtp Address to configure IIS SMTP"
+}
+
+variable "smtp_password" {
+  description = "SMTP Password for Authentication"
+}
+

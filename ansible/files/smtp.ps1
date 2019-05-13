@@ -44,8 +44,8 @@ if (!($smtpserversetting.SmartHost -eq "smtp.gmail.com")) {
     $smtpserversetting.RelayForAuth=-1
     $smtpserversetting.RemoteSmtpPort=587
     $smtpserversetting.RouteAction=268
-    $smtpserversetting.RoutePassword="2y2adm;n2018!!"
-    $smtpserversetting.RouteUserName="eftsftp@gmail.com"
+    $smtpserversetting.RoutePassword="{{ smtp_pass }}"
+    $smtpserversetting.RouteUserName="{{ smtp_email }}"
     $smtpserversetting.SmartHost="smtp.gmail.com"
     $smtpserversetting.SmartHostType=2
     $smtpserversetting.put() | Out-Null

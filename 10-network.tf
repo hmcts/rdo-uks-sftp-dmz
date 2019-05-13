@@ -5,7 +5,7 @@ data "http" "myip" {
 data "azurerm_resource_group" "rg" {
   name                                = "${var.name}-rg"
 }
-
+ 
 data "azurerm_key_vault_secret" "admin-password" {
 name = "admin-password"
 vault_uri = "${var.key_vault_uri}"
