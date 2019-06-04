@@ -210,7 +210,7 @@ resource "azurerm_public_ip" "pip-ansible" {
  }
 
 resource "azurerm_network_interface" "ansible_server_nic" {
-  name                                      = "${data.azurerm_resource_group.rg.name}-ansible-nic-${count.index}"
+  name                                      = "${var.name}-ansible-nic-${count.index}"
   location                                  = "${var.location}"
   resource_group_name                       = "${data.azurerm_resource_group.rg.name}"
   count                                     = 1
