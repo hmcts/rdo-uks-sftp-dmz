@@ -1,3 +1,6 @@
+variable "subscription_id" {
+  description = "Subscription ID to make the changes in"
+}
 
 variable "name" {
   description = "Name of Service"  #"__name__"
