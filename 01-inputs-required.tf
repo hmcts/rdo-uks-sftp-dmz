@@ -22,12 +22,3 @@ variable "vm_count" {
 variable "vnet" {
   default = "10.97."
 }
-
-variable "smtp_email_address" {
-  description = "Smtp Address to configure IIS SMTP"
-}
-
-variable "smtp_password" {
-  description = "SMTP Password for Authentication"
-}
-
