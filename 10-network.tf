@@ -16,6 +16,16 @@ name = "admin-username"
 vault_uri = "${var.key_vault_uri}"
 }
 
+data "azurerm_key_vault_secret" "smtp_email_address" {
+name = "smtp-email-address"
+vault_uri = "${var.key_vault_uri}"
+}
+
+data "azurerm_key_vault_secret" "smtp_password" {
+name = "smtp-password"
+vault_uri = "${var.key_vault_uri}"
+}
+
 resource "azurerm_virtual_network" "vnet" {
     name                              = "${var.name}-vnet"
     address_space                     = ["${var.vnet}60.0/24"]
