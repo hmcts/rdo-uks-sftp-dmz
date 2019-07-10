@@ -125,7 +125,7 @@ resource "azurerm_virtual_machine" "ansible-host" {
   name                                      = "${var.name}-ansible"
   location                                  = "${var.location}"
   resource_group_name                       = "${data.azurerm_resource_group.rg.name}"
-  network_interface_ids                     = "${azurerm_network_interface.ansible_server_nic.id}"
+  network_interface_ids                     = ["${azurerm_network_interface.ansible_server_nic.id}"]
   vm_size                                   = "Standard_B1s"
   tags                                      = "${var.tags}"
 
