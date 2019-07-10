@@ -127,7 +127,6 @@ resource "azurerm_virtual_machine" "ansible-host" {
   resource_group_name                       = "${data.azurerm_resource_group.rg.name}"
   network_interface_ids                     = ["${element(azurerm_network_interface.ansible_server_nic.*.id, count.index)}"]
   vm_size                                   = "Standard_B1s"
-  count                                     = 1
   tags                                      = "${var.tags}"
 
   delete_os_disk_on_termination = true
