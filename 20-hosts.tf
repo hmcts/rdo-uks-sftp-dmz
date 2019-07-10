@@ -122,10 +122,10 @@ resource "null_resource" "update_inventory" {
 # Ansible Control Host
 
 resource "azurerm_virtual_machine" "ansible-host" {
-  name                                      = "${var.name}-ansible-${count.index}"
+  name                                      = "${var.name}-ansible"
   location                                  = "${var.location}"
   resource_group_name                       = "${data.azurerm_resource_group.rg.name}"
-  network_interface_ids                     = ["${element(azurerm_network_interface.ansible_server_nic.*.id, count.index)}"]
+  network_interface_ids                     = "${azurerm_network_interface.ansible_server_nic.id}"
   vm_size                                   = "Standard_B1s"
   tags                                      = "${var.tags}"
 
@@ -146,14 +146,14 @@ resource "azurerm_virtual_machine" "ansible-host" {
   }
   
   storage_os_disk {
-    name                                    = "${var.name}-ansible-${count.index}-os"   
+    name                                    = "${var.name}-ansible-os"   
     caching                                 = "ReadWrite"
     create_option                           = "FromImage"
     managed_disk_type                       = "Standard_LRS"
   }
   
   os_profile {
-    computer_name                           = "${var.name}-ansible-${count.index}" 
+    computer_name                           = "${var.name}-ansible}" 
     admin_username                          = "${data.azurerm_key_vault_secret.admin-username.value}"
     admin_password                          = "${data.azurerm_key_vault_secret.admin-password.value}"
   }
@@ -167,7 +167,7 @@ provisioner "remote-exec" {
     type                                    = "ssh"
     user                                    = "${data.azurerm_key_vault_secret.admin-username.value}"
     password                                = "${data.azurerm_key_vault_secret.admin-password.value}"
-    host                                    = "${azurerm_public_ip.pip-ansible.*.ip_address}"
+    host                                    = "${azurerm_public_ip.pip-ansible.ip_address}"
  }
 }
 
@@ -199,7 +199,7 @@ SETTINGS
 
 
 resource "azurerm_public_ip" "pip-ansible" {
-   name                                     = "${var.name}-ansible-pip-${count.index}"
+   name                                     = "${var.name}-ansible-pip"
    location                                 = "${var.location}"
    resource_group_name                      = "${data.azurerm_resource_group.rg.name}"
    allocation_method                        = "Static"
@@ -208,15 +208,15 @@ resource "azurerm_public_ip" "pip-ansible" {
  }
 
 resource "azurerm_network_interface" "ansible_server_nic" {
-  name                                      = "${var.name}-ansible-nic-${count.index}"
+  name                                      = "${var.name}-ansible-nic"
   location                                  = "${var.location}"
   resource_group_name                       = "${data.azurerm_resource_group.rg.name}"
   count                                     = 1
     ip_configuration {
-        name                                = "${var.name}-ansible-ip-${count.index}"
+        name                                = "${var.name}-ansible-ip"
         subnet_id                           = "${azurerm_subnet.subnet_public.id}"
         private_ip_address_allocation       = "dynamic"
-        public_ip_address_id                = "${element(azurerm_public_ip.pip-ansible.*.id, count.index)}"
+        public_ip_address_id                = "${azurerm_public_ip.pip-ansible.id}"
     }
   tags                                      = "${var.tags}"
 }
@@ -243,7 +243,7 @@ resource "null_resource" "ansible-runs" {
       type                                  = "ssh"
       user                                  = "${data.azurerm_key_vault_secret.admin-username.value}"
       password                              = "${data.azurerm_key_vault_secret.admin-password.value}"
-      host                                  = "${azurerm_public_ip.pip-ansible.*.ip_address}"
+      host                                  = "${azurerm_public_ip.pip-ansible.ip_address}"
     }
   }
 
@@ -257,7 +257,7 @@ resource "null_resource" "ansible-runs" {
       type     = "ssh"
       user     = "${data.azurerm_key_vault_secret.admin-username.value}"
       password = "${data.azurerm_key_vault_secret.admin-password.value}"
-      host     = "${azurerm_public_ip.pip-ansible.*.ip_address}"
+      host     = "${azurerm_public_ip.pip-ansible.ip_address}"
     }
   }
 }
