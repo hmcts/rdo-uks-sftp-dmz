@@ -110,7 +110,7 @@ resource "null_resource" "update_inventory" {
         "azurerm_virtual_machine_extension.dmz",
         "azurerm_public_ip.pip-public"
     ]
-    triggers {
+    triggers = {
         template = "${data.template_file.inventory.rendered}"
     }
 
