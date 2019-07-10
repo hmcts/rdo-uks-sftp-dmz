@@ -204,8 +204,8 @@ resource "azurerm_public_ip" "pip-ansible" {
    name                                     = "${var.name}-ansible-pip-${count.index}"
    location                                 = "${var.location}"
    resource_group_name                      = "${data.azurerm_resource_group.rg.name}"
-   public_ip_address_allocation             = "static"
-   count = 1
+   allocation_method                        = "static"
+   count                                    = 1
   tags                                      = "${var.tags}"
  }
 
