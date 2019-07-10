@@ -130,9 +130,9 @@ resource "azurerm_network_security_rule" "rdp_admin_to_public_from_office" {
   network_security_group_name                   = "${azurerm_network_security_group.public_nsg.name}"
 }
 
-resource "azurerm_network_security_rule" "44500_inbound" {
+resource "azurerm_network_security_rule" "inbound_44500" {
   name                                          = "44500_port"
-  description		                            = "Port between Public and Private"
+  description		                                = "Port between Public and Private"
   priority                                      = 128
   direction                                     = "Inbound"
   access                                        = "Allow"
