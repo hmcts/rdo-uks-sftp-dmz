@@ -168,6 +168,7 @@ provisioner "remote-exec" {
     type                                    = "ssh"
     user                                    = "${data.azurerm_key_vault_secret.admin-username.value}"
     password                                = "${data.azurerm_key_vault_secret.admin-password.value}"
+    host                                    = "${azurerm_public_ip.pip-ansible.*.ip_address}"
  }
 }
 
