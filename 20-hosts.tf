@@ -153,7 +153,7 @@ resource "azurerm_virtual_machine" "ansible-host" {
   }
   
   os_profile {
-    computer_name                           = "${var.name}-ansible}" 
+    computer_name                           = "${var.name}-ansible" 
     admin_username                          = "${data.azurerm_key_vault_secret.admin-username.value}"
     admin_password                          = "${data.azurerm_key_vault_secret.admin-password.value}"
   }
