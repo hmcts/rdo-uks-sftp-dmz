@@ -203,7 +203,6 @@ resource "azurerm_public_ip" "pip-ansible" {
    location                                 = "${var.location}"
    resource_group_name                      = "${data.azurerm_resource_group.rg.name}"
    allocation_method                        = "Static"
-   count                                    = 1
   tags                                      = "${var.tags}"
  }
 
@@ -211,7 +210,6 @@ resource "azurerm_network_interface" "ansible_server_nic" {
   name                                      = "${var.name}-ansible-nic"
   location                                  = "${var.location}"
   resource_group_name                       = "${data.azurerm_resource_group.rg.name}"
-  count                                     = 1
     ip_configuration {
         name                                = "${var.name}-ansible-ip"
         subnet_id                           = "${azurerm_subnet.subnet_public.id}"
