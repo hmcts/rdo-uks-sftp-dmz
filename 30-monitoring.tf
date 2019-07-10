@@ -9,7 +9,7 @@ resource "azurerm_monitor_metric_alertrule" "cpu" {
 
   enabled                                   = true
 
-  resource_id                               = "${azurerm_virtual_machine.dmz.id}" 
+  resource_id                               = "${azurerm_virtual_machine.dmz.*.id}" 
   metric_name                               = "Percentage CPU"
   operator                                  = "GreaterThan"
   threshold                                 = 75
