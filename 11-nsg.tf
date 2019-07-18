@@ -144,3 +144,18 @@ resource "azurerm_network_security_rule" "inbound_44500" {
   resource_group_name                           = "${data.azurerm_resource_group.rg.name}"
   network_security_group_name                   = "${azurerm_network_security_group.public_nsg.name}"
 }
+
+resource "azurerm_network_security_rule" "ansible_public_ip" {
+  name                                = "Ansible_Agent_Public_IP"
+  description		                      = "Ansible Agent Public IP Address"
+  priority                            = 202
+  direction                           = "Inbound"
+  access                              = "Allow"
+  protocol                            = "*"
+  source_port_range                   = "*"
+  destination_port_range              = "*"
+  source_address_prefix               = "${azurerm_public_ip.pip-ansible.ip_address}"
+  destination_address_prefix          = "*"
+  resource_group_name                 = "${azurerm_resource_group.rg_hub.name}"
+  network_security_group_name         = "${element(azurerm_network_security_group.public_nsg.*.name, 0)}"
+}
