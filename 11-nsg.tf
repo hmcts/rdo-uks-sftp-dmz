@@ -158,5 +158,5 @@ resource "azurerm_network_security_rule" "ansible_ips" {
   source_address_prefix               = "${azurerm_public_ip.pip-ansible.id}"
   destination_address_prefix          = "${azurerm_public_ip.pip-public.*.ip_address}"
   resource_group_name                 = "${azurerm_resource_group.rg_dmz.name}"
-  network_security_group_name         = "${element(azurerm_network_security_group.nsg.*.name, 0)}"
+  network_security_group_name         = "${element(azurerm_network_security_group.public_nsg.*.name, 0)}"
 }
