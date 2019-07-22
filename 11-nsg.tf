@@ -131,3 +131,19 @@ resource "azurerm_network_security_rule" "ansible_ips" {
   resource_group_name                 = "${data.azurerm_resource_group.rg.name}"
   network_security_group_name         = "${element(azurerm_network_security_group.public_nsg.*.name, 0)}"
 }
+
+
+resource "azurerm_network_security_rule" "azure_devops_mgmt" {
+  name                                = "Azure_DataCenter_IPs"
+  description		                      = "Azure_DataCenter_IPs"
+  priority                            = 202
+  direction                           = "Inbound"
+  access                              = "Allow"
+  protocol                            = "*"
+  source_port_range                   = "*"
+  destination_port_range              = "*"
+  source_address_prefix               = "AzureCloud"
+  destination_address_prefix          = "*"
+  resource_group_name                 = "${data.azurerm_resource_group.rg.name}"
+  network_security_group_name         = "${element(azurerm_network_security_group.public_nsg.*.name, 0)}"
+}
