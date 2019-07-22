@@ -1,6 +1,3 @@
-data "http" "myip" {
-  url = "http://v4.ident.me"
-}
 
 data "azurerm_resource_group" "rg" {
   name                                = "${var.name}-rg"
