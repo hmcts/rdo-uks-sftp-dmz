@@ -1,5 +1,5 @@
 resource "azurerm_route_table" "rt" {
-  name                              = "${var.name}-dmz-udr"
+  name                              = "${var.name}-udr"
   location                          = "${data.azurerm_resource_group.rg.location}"
   resource_group_name               = "${data.azurerm_resource_group.rg.name}"
   disable_bgp_route_propagation     = false
