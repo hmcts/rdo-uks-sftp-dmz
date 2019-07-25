@@ -1,7 +1,7 @@
 resource "azurerm_route_table" "rt" {
-  name                              = "${var.vnet_name}-${var.environment}-udr"
-  location                          = "${azurerm_resource_group.rg_dmz.location}"
-  resource_group_name               = "${azurerm_resource_group.rg_dmz.name}"
+  name                              = "${var.name}-dmz-udr"
+  location                          = "${data.azurerm_resource_group.rg.location}"
+  resource_group_name               = "${data.azurerm_resource_group.rg.name}"
   disable_bgp_route_propagation     = false
 
   route {
@@ -13,7 +13,7 @@ resource "azurerm_route_table" "rt" {
 }
 
 resource "azurerm_subnet_route_table_association" "route_association" {
-  subnet_id                         = "${azurerm_subnet.subnet.1.id}"
+  subnet_id                         = "${azurerm_subnet.subnet_public.id}"
   route_table_id                    = "${azurerm_route_table.rt.id}"
 }
 
