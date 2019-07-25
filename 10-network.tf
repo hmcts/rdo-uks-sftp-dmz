@@ -14,4 +14,7 @@ resource "azurerm_subnet" "subnet_public" {
     address_prefix                    = "${var.vnet}60.0/24"
     service_endpoints                 = ["Microsoft.Storage"]
     network_security_group_id         = "${azurerm_network_security_group.public_nsg.id}"
+    lifecycle { 
+     ignore_changes                 = ["route_table_id"]
+ }
 }
