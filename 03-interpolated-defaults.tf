@@ -23,6 +23,10 @@ name = "smtp-password"
 vault_uri = "${var.key_vault_uri}"
 }
 
+data "azurerm_resource_group" "hub" {
+  name                                      = "hub"
+}
+
 data "azurerm_network_interface" "palo_ip" {
   name                                      = "fw-sbox-nic-transit-public-0"
   resource_group_name                       = "${data.azurerm_resource_group.hub.name}"
