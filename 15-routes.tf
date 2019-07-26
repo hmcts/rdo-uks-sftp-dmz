@@ -1,3 +1,4 @@
+/*
 resource "azurerm_route_table" "rt" {
   name                              = "${var.name}-udr"
   location                          = "${data.azurerm_resource_group.rg.location}"
@@ -16,4 +17,4 @@ resource "azurerm_subnet_route_table_association" "route_association" {
   subnet_id                         = "${azurerm_subnet.subnet_public.id}"
   route_table_id                    = "${azurerm_route_table.rt.id}"
 }
-
+*/
