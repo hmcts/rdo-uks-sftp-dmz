@@ -116,7 +116,7 @@ resource "azurerm_network_security_rule" "inbound_44500" {
   network_security_group_name                   = "${azurerm_network_security_group.public_nsg.name}"
 }
 
-
+/*
 resource "azurerm_network_security_rule" "ansible_ips" {
   name                                = "ansible_ips"
   description		                      = "ansible_ips"
@@ -132,7 +132,7 @@ resource "azurerm_network_security_rule" "ansible_ips" {
   network_security_group_name         = "${element(azurerm_network_security_group.public_nsg.*.name, 0)}"
 }
 
-
+*/
 resource "azurerm_network_security_rule" "azure_devops_mgmt" {
   name                                = "Azure_DataCenter_IPs"
   description		                      = "Azure_DataCenter_IPs"
