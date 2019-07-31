@@ -18,7 +18,7 @@ resource "azurerm_public_ip" "pip-public" {
         name                                = "${var.name}-dmz-ip-${count.index}"
         subnet_id                           = "${azurerm_subnet.subnet_public.id}"
         private_ip_address_allocation       = "dynamic"
-        public_ip_address_id                = "${element(azurerm_public_ip.pip-public.*.id, count.index)}"
+        public_ip_address_id                = "${azurerm_public_ip.pip-public.*.id}"
     }
    tags                                     = "${var.tags}"
 }
