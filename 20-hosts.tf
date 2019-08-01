@@ -16,7 +16,7 @@ resource "azurerm_public_ip" "pip-public" {
   count                                     = 2
     ip_configuration {
         name                                = "${var.name}-mgmt-ip-${count.index}"
-        subnet_id                           = "${azurerm_subnet.subnet_public.id}"
+        subnet_id                           = "${azurerm_subnet.subnet_mgmt.id}"
         private_ip_address_allocation       = "dynamic"
         public_ip_address_id                = "${element(azurerm_public_ip.pip-public.*.id, count.index)}"
     }
