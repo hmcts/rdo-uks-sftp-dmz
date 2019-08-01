@@ -41,7 +41,7 @@ resource "azurerm_virtual_machine" "dmz" {
   name                                      = "${var.name}-vm-${count.index}"
   location                                  = "${var.location}"
   resource_group_name                       = "${data.azurerm_resource_group.rg.name}"
-  primary_network_interface_id              = ["${element(azurerm_network_interface.data_server_nic.*.id, count.index)}", ]
+  primary_network_interface_id              = ["${element(azurerm_network_interface.data_server_nic.*.id, count.index)}"]
   network_interface_ids                     = ["${element(azurerm_network_interface.data_server_nic.*.id, count.index)}", "${element(azurerm_network_interface.mgmt_server_nic.*.id, count.index)}"]
   vm_size                                   = "Standard_B4ms"
   count                                     = 2
