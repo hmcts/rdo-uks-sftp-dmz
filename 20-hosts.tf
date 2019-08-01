@@ -18,7 +18,7 @@ resource "azurerm_public_ip" "pip-public" {
         name                                = "${var.name}-mgmt-ip-${count.index}"
         subnet_id                           = "${azurerm_subnet.subnet_mgmt.id}"
         private_ip_address_allocation       = "dynamic"
-        public_ip_address_id                = "${element(azurerm_public_ip.pip-public.*.id, count.index +1 )}"
+        public_ip_address_id                = "${element(azurerm_public_ip.pip-public.*.id, count.index)}"
     }
    tags                                     = "${var.tags}"
 }
@@ -41,7 +41,7 @@ resource "azurerm_virtual_machine" "dmz" {
   name                                      = "${var.name}-vm-${count.index}"
   location                                  = "${var.location}"
   resource_group_name                       = "${data.azurerm_resource_group.rg.name}"
-  primary_network_interface_id              = "${element(azurerm_network_interface.data_server_nic.*.id, count.index)}"
+  primary_network_interface_id              = "${azurerm_network_interface.data_server_nic.*.id}"
   network_interface_ids                     = ["${element(azurerm_network_interface.data_server_nic.*.id, count.index)}", "${element(azurerm_network_interface.mgmt_server_nic.*.id, count.index)}"]
   vm_size                                   = "Standard_B4ms"
   count                                     = 2
