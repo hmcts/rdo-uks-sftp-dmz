@@ -15,6 +15,6 @@ resource "azurerm_subnet" "subnet_public" {
     service_endpoints                 = ["Microsoft.Storage"]
     network_security_group_id         = "${azurerm_network_security_group.public_nsg.id}"
     lifecycle { 
-         ignore_changes              = ["route_table_id"]
+         ignore_changes               = ["route_table_id"]
     }
 }
