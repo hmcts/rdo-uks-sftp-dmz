@@ -63,7 +63,8 @@ resource "azurerm_virtual_machine" "dmz" {
 
 }
 
-# https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1
+# 
+# https://raw.githubusercontent.com/hmcts/rdo-uks-sftp-dmz/master/scripts/ConfigureRemotingForAnsible.ps1?token=AA5K2ONGTU65L2UYJMTNMCS5IQHUE
 
 
 resource "azurerm_virtual_machine_extension" "dmz" {
@@ -79,7 +80,7 @@ resource "azurerm_virtual_machine_extension" "dmz" {
     settings = <<SETTINGS
     {
         "fileUris": [
-            "https://raw.githubusercontent.com/hmcts/rdo-uks-sftp-dmz/master/scripts/ConfigureRemotingForAnsible.ps1?token=AA5K2ONGTU65L2UYJMTNMCS5IQHUE"
+            "https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1"
         ],
         "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File ./ConfigureRemotingForAnsible.ps1"
     }
