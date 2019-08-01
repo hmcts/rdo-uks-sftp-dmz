@@ -3,7 +3,7 @@ resource "azurerm_public_ip" "pip-public" {
    name                                     = "${var.name}-dmz-pip-${count.index}"
    location                                 = "${var.location}"
    resource_group_name                      = "${data.azurerm_resource_group.rg.name}"
-   allocation_method                        = "Dynamic"
+   allocation_method                        = "Static"
    count                                    = 2
    tags                                     = "${var.tags}"
  }
@@ -18,7 +18,7 @@ resource "azurerm_public_ip" "pip-public" {
         name                                = "${var.name}-mgmt-ip-${count.index}"
         subnet_id                           = "${azurerm_subnet.subnet_mgmt.id}"
         private_ip_address_allocation       = "dynamic"
-        public_ip_address_id                = "${azurerm_public_ip.pip-public.*.id}"
+        public_ip_address_id                = "${element(azurerm_public_ip.pip-public.*.id, count.index +1 )}"
     }
    tags                                     = "${var.tags}"
 }
