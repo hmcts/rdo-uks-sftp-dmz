@@ -3,7 +3,7 @@ resource "azurerm_public_ip" "pip-public" {
    name                                     = "${var.name}-dmz-pip-${count.index}"
    location                                 = "${var.location}"
    resource_group_name                      = "${data.azurerm_resource_group.rg.name}"
-   allocation_method                        = "Static"
+   allocation_method                        = "Dynamic"
    count                                    = 2
    tags                                     = "${var.tags}"
  }
