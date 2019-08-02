@@ -41,8 +41,8 @@ resource "azurerm_virtual_machine" "dmz" {
   name                                      = "${var.name}-vm-${count.index}"
   location                                  = "${var.location}"
   resource_group_name                       = "${data.azurerm_resource_group.rg.name}"
-  primary_network_interface_id              = "${element(azurerm_network_interface.data_server_nic.*.id, count.index)}"
-  network_interface_ids                     = ["${element(azurerm_network_interface.data_server_nic.*.id, count.index)}", "${element(azurerm_network_interface.mgmt_server_nic.*.id, count.index)}"]
+  primary_network_interface_id              = "${element(azurerm_network_interface.mgmt_server_nic.*.id, count.index)}"
+  network_interface_ids                     = ["${element(azurerm_network_interface.mgmt_server_nic.*.id, count.index)}", "${element(azurerm_network_interface.data_server_nic.*.id, count.index)}"]
   vm_size                                   = "Standard_B4ms"
   count                                     = 2
   delete_os_disk_on_termination             = true
@@ -106,14 +106,14 @@ data "template_file" "inventory" {
 
     depends_on = [
         "azurerm_virtual_machine.dmz",
-        "azurerm_network_interface.data_server_nic",
+        "azurerm_network_interface.mgmt_server_nic",
         "azurerm_virtual_machine_extension.dmz",
         "azurerm_public_ip.pip-public"
         
     ]
 
     vars = {
-        public_ip = "${join("\n", azurerm_network_interface.data_server_nic.*.private_ip_address)}"  
+        public_ip = "${join("\n", azurerm_network_interface.mgmt_server_nic.*.private_ip_address)}"  
         username = "${data.azurerm_key_vault_secret.admin-username.value}"
         admin_pass = "${data.azurerm_key_vault_secret.admin-password.value}"
     }
@@ -123,7 +123,7 @@ resource "null_resource" "update_inventory" {
 
     depends_on = [
         "azurerm_virtual_machine.dmz",
-        "azurerm_network_interface.data_server_nic",
+        "azurerm_network_interface.mgmt_server_nic",
         "azurerm_virtual_machine_extension.dmz",
         "azurerm_public_ip.pip-public"
     ]
@@ -229,7 +229,7 @@ resource "azurerm_network_interface" "ansible_server_nic" {
   resource_group_name                       = "${data.azurerm_resource_group.rg.name}"
     ip_configuration {
         name                                = "${var.name}-ansible-ip"
-        subnet_id                           = "${azurerm_subnet.subnet_public.id}"
+        subnet_id                           = "${azurerm_subnet.subnet_mgmt.id}"
         private_ip_address_allocation       = "dynamic"
         public_ip_address_id                = "${azurerm_public_ip.pip-ansible.id}"
     }
