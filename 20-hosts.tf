@@ -1,6 +1,6 @@
 
 resource "azurerm_public_ip" "pip-public" {
-   name                                     = "${var.name}-dmz-pip-${count.index}"
+   name                                     = "${var.name}-mgmt-pip-${count.index}"
    location                                 = "${var.location}"
    resource_group_name                      = "${data.azurerm_resource_group.rg.name}"
    allocation_method                        = "Static"
@@ -56,10 +56,10 @@ resource "azurerm_virtual_machine" "dmz" {
   }
  
    storage_os_disk {
-    name                  = "${var.name}-os-${count.index}"
-    caching               = "ReadWrite"
-    create_option         = "FromImage"
-    managed_disk_type     = "Standard_LRS"
+    name                                    = "${var.name}-os-${count.index}"
+    caching                                 = "ReadWrite"
+    create_option                           = "FromImage"
+    managed_disk_type                       = "Standard_LRS"
   }
   os_profile {
     computer_name                           = "dmz-${count.index}"

@@ -19,7 +19,7 @@ resource "azurerm_network_security_rule" "ftp_ftps_21" {
   source_port_range                             = "*"
   destination_port_range                        = "21"
   source_address_prefix                         = "213.121.161.124/32"
-  destination_address_prefix                    = "${azurerm_subnet.subnet_public.address_prefix}"
+  destination_address_prefix                    = "*"
   resource_group_name                           = "${data.azurerm_resource_group.rg.name}"
   network_security_group_name                   = "${azurerm_network_security_group.public_nsg.name}"
 }
@@ -34,7 +34,7 @@ resource "azurerm_network_security_rule" "sftp_ssh_22" {
   source_port_range                             = "*"
   destination_port_range                        = "22"
   source_address_prefix                         = "213.121.161.124/32"
-  destination_address_prefix                    = "${azurerm_subnet.subnet_public.address_prefix}"
+  destination_address_prefix                    = "*"
   resource_group_name                           = "${data.azurerm_resource_group.rg.name}"
   network_security_group_name                   = "${azurerm_network_security_group.public_nsg.name}"
 }
@@ -50,7 +50,7 @@ resource "azurerm_network_security_rule" "Passive-range" {
   source_port_range                             = "*"
   destination_port_range                        = "27001-28000"
   source_address_prefix                         = "213.121.161.124/32"
-  destination_address_prefix                    = "${azurerm_subnet.subnet_public.address_prefix}"
+  destination_address_prefix                    = ""
   resource_group_name                           = "${data.azurerm_resource_group.rg.name}"
   network_security_group_name                   = "${azurerm_network_security_group.public_nsg.name}"
 }
@@ -65,7 +65,7 @@ resource "azurerm_network_security_rule" "https_443" {
   source_port_range                             = "*"
   destination_port_range                        = "443"
   source_address_prefix                         = "213.121.161.124/32"
-  destination_address_prefix                    = "${azurerm_subnet.subnet_public.address_prefix}"
+  destination_address_prefix                    = "*"
   resource_group_name                           = "${data.azurerm_resource_group.rg.name}"
   network_security_group_name                   = "${azurerm_network_security_group.public_nsg.name}"
 }
@@ -80,7 +80,7 @@ resource "azurerm_network_security_rule" "port_990" {
   source_port_range                             = "*"
   destination_port_range                        = "990"
   source_address_prefix                         = "213.121.161.124/32"
-  destination_address_prefix                    = "${azurerm_subnet.subnet_public.address_prefix}"
+  destination_address_prefix                    = "*"
   resource_group_name                           = "${data.azurerm_resource_group.rg.name}"
   network_security_group_name                   = "${azurerm_network_security_group.public_nsg.name}"
 }
@@ -96,7 +96,7 @@ resource "azurerm_network_security_rule" "rdp_admin_to_public_from_office" {
   source_port_range                             = "*"
   destination_port_range                        = "3389"
   source_address_prefix                         = "213.121.161.124/32"
-  destination_address_prefix                    = "${azurerm_subnet.subnet_public.address_prefix}"
+  destination_address_prefix                    = "*"
   resource_group_name                           = "${data.azurerm_resource_group.rg.name}"
   network_security_group_name                   = "${azurerm_network_security_group.public_nsg.name}"
 }
@@ -110,40 +110,24 @@ resource "azurerm_network_security_rule" "inbound_44500" {
   protocol                                      = "Tcp"
   source_port_range                             = "44500"
   destination_port_range                        = "44500"
-  source_address_prefix                         = "*" #"${azurerm_subnet.subnet_private.address_prefix}"
-  destination_address_prefix                    = "${azurerm_subnet.subnet_public.address_prefix}"
+  source_address_prefix                         = "${azurerm_subnet.subnet_private.address_prefix}"
+  destination_address_prefix                    = "*"
   resource_group_name                           = "${data.azurerm_resource_group.rg.name}"
   network_security_group_name                   = "${azurerm_network_security_group.public_nsg.name}"
 }
 
-/*
-resource "azurerm_network_security_rule" "ansible_ips" {
-  name                                = "ansible_ips"
-  description		                      = "ansible_ips"
-  priority                            = 201
-  direction                           = "Inbound"
-  access                              = "Allow"
-  protocol                            = "*"
-  source_port_range                   = "*"
-  destination_port_range              = "*"
-  source_address_prefix               = "${azurerm_public_ip.pip-ansible.ip_address}"
-  destination_address_prefix          = "${azurerm_subnet.subnet_public.address_prefix}"
-  resource_group_name                 = "${data.azurerm_resource_group.rg.name}"
-  network_security_group_name         = "${element(azurerm_network_security_group.public_nsg.*.name, 0)}"
-}
 
-*/
 resource "azurerm_network_security_rule" "azure_devops_mgmt" {
-  name                                = "Azure_DataCenter_IPs"
-  description		                      = "Azure_DataCenter_IPs"
-  priority                            = 202
-  direction                           = "Inbound"
-  access                              = "Allow"
-  protocol                            = "*"
-  source_port_range                   = "*"
-  destination_port_range              = "*"
-  source_address_prefix               = "AzureCloud"
-  destination_address_prefix          = "*"
-  resource_group_name                 = "${data.azurerm_resource_group.rg.name}"
-  network_security_group_name         = "${element(azurerm_network_security_group.public_nsg.*.name, 0)}"
+  name                                          = "Azure_DataCenter_IPs"
+  description		                                = "Azure_DataCenter_IPs"
+  priority                                      = 202
+  direction                                     = "Inbound"
+  access                                        = "Allow"
+  protocol                                      = "*"
+  source_port_range                             = "*"
+  destination_port_range                        = "*"
+  source_address_prefix                         = "AzureCloud"
+  destination_address_prefix                    = "*"
+  resource_group_name                           = "${data.azurerm_resource_group.rg.name}"
+  network_security_group_name                   = "${element(azurerm_network_security_group.public_nsg.*.name, 0)}"
 }
