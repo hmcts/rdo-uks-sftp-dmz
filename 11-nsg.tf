@@ -111,6 +111,7 @@ resource "azurerm_network_security_rule" "inbound_44500" {
   protocol                                      = "Tcp"
   source_port_range                             = "44500"
   destination_port_range                        = "44500"
+  source_address_prefix                         = "*"
   #source_address_prefix                         = "${azurerm_subnet.subnet_private.address_prefix}"
   destination_address_prefix                    = "*"
   resource_group_name                           = "${data.azurerm_resource_group.rg.name}"
