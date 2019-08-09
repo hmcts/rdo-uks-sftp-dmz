@@ -51,7 +51,7 @@ resource "azurerm_network_security_rule" "Passive-range" {
   source_port_range                             = "*"
   destination_port_range                        = "27001-28000"
   source_address_prefix                         = "213.121.161.124/32"
-  destination_address_prefix                    = ""
+  destination_address_prefix                    = "*"
   resource_group_name                           = "${data.azurerm_resource_group.rg.name}"
   network_security_group_name                   = "${azurerm_network_security_group.public_nsg.name}"
 }
