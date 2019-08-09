@@ -27,7 +27,7 @@ resource "azurerm_network_interface" "data_server_nic" {
   name                                      = "${var.name}-data-nic-${count.index}"
   location                                  = "${var.location}"
   resource_group_name                       = "${data.azurerm_resource_group.rg.name}"
-  network_security_group_id                 = "${azurerm_network_security_group..id}"
+  #network_security_group_id                 = "${azurerm_network_security_group.public_nsg.id}"
   count                                     = 2
     ip_configuration {
         name                                = "${var.name}-data-ip-${count.index}"
