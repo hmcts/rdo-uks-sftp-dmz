@@ -12,7 +12,7 @@ resource "azurerm_public_ip" "pip-public" {
   name                                      = "${var.name}-mgmt-nic-${count.index}"
   location                                  = "${var.location}"
   resource_group_name                       = "${data.azurerm_resource_group.rg.name}"
-  network_security_group_id                 = "${azurerm_network_security_group.public_nsg.id}"
+  #network_security_group_id                 = "${azurerm_network_security_group.public_nsg.id}"
   count                                     = 2
     ip_configuration {
         name                                = "${var.name}-mgmt-ip-${count.index}"
@@ -27,7 +27,7 @@ resource "azurerm_network_interface" "data_server_nic" {
   name                                      = "${var.name}-data-nic-${count.index}"
   location                                  = "${var.location}"
   resource_group_name                       = "${data.azurerm_resource_group.rg.name}"
-  network_security_group_id                 = "${azurerm_network_security_group.public_nsg.id}"
+  network_security_group_id                 = "${azurerm_network_security_group..id}"
   count                                     = 2
     ip_configuration {
         name                                = "${var.name}-data-ip-${count.index}"
