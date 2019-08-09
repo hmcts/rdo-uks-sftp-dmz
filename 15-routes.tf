@@ -13,8 +13,8 @@ resource "azurerm_route_table" "rt" {
   }
 }
 
-resource "azurerm_subnet_route_table_association" "route_association" {
-  subnet_id                         = "${azurerm_subnet.subnet_public.id}"
-  route_table_id                    = "${azurerm_route_table.rt.id}"
-}
+#resource "azurerm_subnet_route_table_association" "route_association" {
+#  subnet_id                         = "${azurerm_subnet.subnet_public.id}"
+#  route_table_id                    = "${azurerm_route_table.rt.id}"
+#}
 
