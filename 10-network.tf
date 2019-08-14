@@ -1,6 +1,6 @@
 resource "azurerm_virtual_network" "vnet" {
     name                              = "${var.name}-vnet"
-    address_space                     = ["${var.vnet}192.0/22"]
+    address_space                     = ["${var.vnet}192.0/23"]
     location                          = "${var.location}"
     resource_group_name               = "${data.azurerm_resource_group.rg.name}"
     tags                              = "${var.tags}"
