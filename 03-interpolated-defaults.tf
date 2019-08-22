@@ -5,22 +5,22 @@ data "azurerm_resource_group" "rg" {
  
 data "azurerm_key_vault_secret" "admin-password" {
 name = "admin-password"
-key_vault_id = "${var.key_vault_uri}"
+vault_uri = "${var.key_vault_uri}"
 }
 
 data "azurerm_key_vault_secret" "admin-username" {
 name = "admin-username"
-key_vault_id = "${var.key_vault_uri}"
+vault_uri = "${var.key_vault_uri}"
 }
 
 data "azurerm_key_vault_secret" "smtp_email_address" {
 name = "smtp-email-address"
-key_vault_id = "${var.key_vault_uri}"
+vault_uri = "${var.key_vault_uri}"
 }
 
 data "azurerm_key_vault_secret" "smtp_password" {
 name = "smtp-password"
-key_vault_id = "${var.key_vault_uri}"
+vault_uri = "${var.key_vault_uri}"
 }
 
 data "azurerm_resource_group" "hub" {
