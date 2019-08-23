@@ -1,6 +1,7 @@
 provider "azurerm" {
   version                           = ">=1.24.0"
   subscription_id                   = "${var.subscription_id}"
+  backend "azurerm" {}
 }
 
 provider "http" {
