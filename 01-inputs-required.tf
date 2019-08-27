@@ -18,8 +18,8 @@ variable "virtual_machine_name" {
   description =  "Please use when setup in pipeline" #"__name__-vm"
 }
 
-variable "count" {
-    default = 1
+variable "vm_count" {
+    default = 2
 }
 
 variable "vnet" {
