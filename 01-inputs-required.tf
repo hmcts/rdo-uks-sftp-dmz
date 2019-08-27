@@ -25,3 +25,5 @@ variable "vm_count" {
 variable "vnet" {
   default = "10.97."
 }
+
+variable "environment" { }

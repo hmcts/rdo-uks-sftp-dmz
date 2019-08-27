@@ -41,6 +41,6 @@ data "azurerm_resource_group" "dmz" {
 }
 
 data "azurerm_virtual_network" "vnet-dmz" {
-  name                                      = "${data.azurerm_resource_group.dmz.name}"
+  name                                      = "${data.azurerm_resource_group.dmz.name}-${var.environment}"
   resource_group_name                       = "${data.azurerm_resource_group.dmz.name}"
 }
