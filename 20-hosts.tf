@@ -16,13 +16,14 @@ resource "azurerm_public_ip" "pip-public" {
   count                                     = 2
     ip_configuration {
         name                                = "${var.name}-mgmt-ip-${count.index}"
-        subnet_id                           = "${azurerm_subnet.subnet_mgmt.id}"
+        subnet_id                           = "${data.azurerm_subnet.subnet-dmz-mgmt.id}"
         private_ip_address_allocation       = "dynamic"
         public_ip_address_id                = "${element(azurerm_public_ip.pip-public.*.id, count.index)}"
     }
    tags                                     = "${var.tags}"
 }
 
+/*
 resource "azurerm_network_interface" "data_server_nic" {
   name                                      = "${var.name}-data-nic-${count.index}"
   location                                  = "${var.location}"
@@ -277,3 +278,4 @@ resource "null_resource" "ansible-runs" {
   }
 }
 
+*/
