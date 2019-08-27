@@ -102,7 +102,7 @@ resource "azurerm_virtual_machine_extension" "dmz" {
     SETTINGS
 }
 
-/*
+
 data "template_file" "inventory" {
     template = "${file("${path.module}/template/inventory.tpl")}"
 
@@ -231,7 +231,7 @@ resource "azurerm_network_interface" "ansible_server_nic" {
   resource_group_name                       = "${data.azurerm_resource_group.rg.name}"
     ip_configuration {
         name                                = "${var.name}-ansible-ip"
-        subnet_id                           = "${azurerm_subnet.subnet_public.id}"
+        subnet_id                           = "${data.azurerm_subnet.subnet-dmz-mgmt.id}"
         private_ip_address_allocation       = "dynamic"
         public_ip_address_id                = "${azurerm_public_ip.pip-ansible.id}"
     }
@@ -278,5 +278,3 @@ resource "null_resource" "ansible-runs" {
     }
   }
 }
-
-*/
