@@ -14,7 +14,7 @@ resource "azurerm_network_security_rule" "ansible_2_sftp_host" {
   source_address_prefix                         = "${data.azurerm_network_security_group.sg-nsg-mgmt}"
   destination_address_prefix                    = "${data.azurerm_network_security_group.sg-nsg-sftp}"
   resource_group_name                           = "${data.azurerm_resource_group.rg.name}"
-  network_security_group_name                   = "${azurerm_network_security_group.sg-nsg-sftp}"
+  network_security_group_name                   = "${data.azurerm_network_security_group.sg-nsg-sftp}"
 }
 
 
