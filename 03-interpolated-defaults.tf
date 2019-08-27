@@ -46,7 +46,7 @@ data "azurerm_virtual_network" "vnet-dmz" {
 }
 
 data "azurerm_subnet" "subnet-dmz-sftp" {
-  name                                      = "backend"
+  name                                      = "dmz-sftp"
   virtual_network_name                      = "${data.azurerm_resource_group.dmz.name}-${var.environment}"
   resource_group_name                       = "${data.azurerm_resource_group.dmz.name}"
 }
