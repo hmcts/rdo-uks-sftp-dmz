@@ -56,3 +56,13 @@ data "azurerm_subnet" "subnet-dmz-mgmt" {
   virtual_network_name                      = "${data.azurerm_resource_group.dmz.name}-${var.environment}"
   resource_group_name                       = "${data.azurerm_resource_group.dmz.name}"
 }
+
+data "azurerm_network_security_group" "sg-nsg-mgmt" {
+  name                                      = "nsg_mgmt"
+  resource_group_name                       = "${data.azurerm_resource_group.dmz.name}"
+}
+
+data "azurerm_network_security_group" "sg-nsg-sftp" {
+  name                                      = "nsg_sftp"
+  resource_group_name                       = "${data.azurerm_resource_group.dmz.name}"
+}

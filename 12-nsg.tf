@@ -2,6 +2,23 @@
 # NSG for DMZ / Public Access
 ###
 
+resource "azurerm_network_security_rule" "ansible_2_sftp_host" {
+  name                                          = "Ansible_to_sftp_hosts"
+  description		                                = "Ansible_to_sftp_hosts"
+  priority                                      = 210
+  direction                                     = "Inbound"
+  access                                        = "Allow"
+  protocol                                      = "*"
+  source_port_range                             = "*"
+  destination_port_range                        = "*"
+  source_address_prefix                         = "${data.azurerm_network_security_group.sg-nsg-mgmt}"
+  destination_address_prefix                    = "${data.azurerm_network_security_group.sg-nsg-sftp}"
+  resource_group_name                           = "${data.azurerm_resource_group.rg.name}"
+  network_security_group_name                   = "${azurerm_network_security_group.sg-nsg-sftp}"
+}
+
+
+/*
 resource "azurerm_network_security_group" "public_nsg" {
     name                                        = "${var.name}-nsg"
     location                                    = "${var.location}"
@@ -133,3 +150,4 @@ resource "azurerm_network_security_rule" "azure_devops_mgmt" {
   resource_group_name                           = "${data.azurerm_resource_group.rg.name}"
   network_security_group_name                   = "${element(azurerm_network_security_group.public_nsg.*.name, 0)}"
 }
+*/
