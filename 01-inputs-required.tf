@@ -18,7 +18,7 @@ variable "virtual_machine_name" {
   description =  "Please use when setup in pipeline" #"__name__-vm"
 }
 
-variable "vm_count" {
+variable "count" {
     default = 1
 }
 

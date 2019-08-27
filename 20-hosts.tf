@@ -4,7 +4,7 @@ resource "azurerm_public_ip" "pip-public" {
    location                                 = "${var.location}"
    resource_group_name                      = "${data.azurerm_resource_group.rg.name}"
    allocation_method                        = "Static"
-   count                                    = 2
+   count                                    = "${var.count}"
    tags                                     = "${var.tags}"
  }
 
@@ -13,7 +13,7 @@ resource "azurerm_public_ip" "pip-public" {
   location                                  = "${var.location}"
   resource_group_name                       = "${data.azurerm_resource_group.rg.name}"
   #network_security_group_id                 = "${azurerm_network_security_group.public_nsg.id}"
-  count                                     = 2
+  count                                     = "${var.count}"
     ip_configuration {
         name                                = "${var.name}-mgmt-ip-${count.index}"
         subnet_id                           = "${data.azurerm_subnet.subnet-dmz-mgmt.id}"
@@ -29,7 +29,7 @@ resource "azurerm_network_interface" "data_server_nic" {
   location                                  = "${var.location}"
   resource_group_name                       = "${data.azurerm_resource_group.rg.name}"
   #network_security_group_id                 = "${azurerm_network_security_group.public_nsg.id}"
-  count                                     = 2
+  count                                     = "${var.count}"
     ip_configuration {
         name                                = "${var.name}-data-ip-${count.index}"
         subnet_id                           = "${data.azurerm_subnet.subnet-dmz-sftp.id}"
@@ -38,7 +38,6 @@ resource "azurerm_network_interface" "data_server_nic" {
    tags                                     = "${var.tags}"
 }
 
-/*
 resource "azurerm_virtual_machine" "dmz" {
   name                                      = "${var.name}-vm-${count.index}"
   location                                  = "${var.location}"
@@ -46,7 +45,7 @@ resource "azurerm_virtual_machine" "dmz" {
   primary_network_interface_id              = "${element(azurerm_network_interface.data_server_nic.*.id, count.index)}"
   network_interface_ids                     = ["${element(azurerm_network_interface.data_server_nic.*.id, count.index)}", "${element(azurerm_network_interface.mgmt_server_nic.*.id, count.index)}"]
   vm_size                                   = "Standard_B4ms"
-  count                                     = 2
+  count                                     = "${var.count}"
   delete_os_disk_on_termination             = true
   tags                                      = "${var.tags}"
 
@@ -78,6 +77,7 @@ resource "azurerm_virtual_machine" "dmz" {
 
 }
 
+/*
 # 
 # https://raw.githubusercontent.com/hmcts/rdo-uks-sftp-dmz/master/scripts/ConfigureRemotingForAnsible.ps1?token=AA5K2ONGTU65L2UYJMTNMCS5IQHUE
 
@@ -91,7 +91,7 @@ resource "azurerm_virtual_machine_extension" "dmz" {
     type                                    = "CustomScriptExtension"
     depends_on                              = ["azurerm_virtual_machine.dmz"]
     type_handler_version                    = "1.9"
-    count                                   = 2
+    count                                   = "${var.count}"
     settings = <<SETTINGS
     {
         "fileUris": [
