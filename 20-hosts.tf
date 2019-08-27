@@ -23,7 +23,7 @@ resource "azurerm_public_ip" "pip-public" {
    tags                                     = "${var.tags}"
 }
 
-/*
+
 resource "azurerm_network_interface" "data_server_nic" {
   name                                      = "${var.name}-data-nic-${count.index}"
   location                                  = "${var.location}"
@@ -32,12 +32,13 @@ resource "azurerm_network_interface" "data_server_nic" {
   count                                     = 2
     ip_configuration {
         name                                = "${var.name}-data-ip-${count.index}"
-        subnet_id                           = "${azurerm_subnet.subnet_public.id}"
+        subnet_id                           = "${data.azurerm_subnet.subnet-dmz-sftp.id}"
         private_ip_address_allocation       = "dynamic"
     }
    tags                                     = "${var.tags}"
 }
 
+/*
 resource "azurerm_virtual_machine" "dmz" {
   name                                      = "${var.name}-vm-${count.index}"
   location                                  = "${var.location}"
