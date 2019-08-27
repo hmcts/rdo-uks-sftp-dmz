@@ -35,3 +35,12 @@ data "azurerm_network_interface" "palo_ip" {
 locals {
   palo_ip                                   = "${data.azurerm_network_interface.palo_ip.private_ip_address}"
 }
+
+data "azurerm_resource_group" "dmz" {
+  name                                      = "dmz"
+}
+
+data "azurerm_virtual_network" "vnet-dmz" {
+  name                                      = "${data.azurerm_resource_group.dmz.name}"
+  resource_group_name                       = "${data.azurerm_resource_group.dmz.name}"
+}

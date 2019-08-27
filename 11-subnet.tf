@@ -1,12 +1,3 @@
-resource "azurerm_virtual_network" "vnet" {
-    name                              = "${var.name}-vnet"
-    address_space                     = ["${var.vnet}192.0/23"]
-    location                          = "${var.location}"
-    resource_group_name               = "${data.azurerm_resource_group.rg.name}"
-    tags                              = "${var.tags}"
-}
-
-
 resource "azurerm_subnet" "subnet_public" {
     name                              = "${var.name}-public-subnet"
     resource_group_name               = "${data.azurerm_resource_group.rg.name}"
