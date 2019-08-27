@@ -1,15 +1,16 @@
 resource "azurerm_subnet" "subnet_public" {
     name                              = "${var.name}-public-subnet"
     resource_group_name               = "${data.azurerm_resource_group.rg.name}"
-    virtual_network_name              = "${azurerm_virtual_network.vnet.name}"
-    address_prefix                    = "${var.vnet}192.0/24"
+    virtual_network_name              = "${data.azurerm_virtual_network.vnet-dmz.name}"
+    address_prefix                    = "${data.azurerm_subnet.subnet-dmz-sftp.3.address_prefix}"
     service_endpoints                 = ["Microsoft.Storage"]
     #network_security_group_id         = "${azurerm_network_security_group.public_nsg.id}"
-    lifecycle {
-        ignore_changes                = ["route_table_id", "network_security_group_id"]
-    }
+    #lifecycle {
+    #    ignore_changes                = ["route_table_id", "network_security_group_id"]
+    #}
 }
 
+/*
 resource "azurerm_subnet" "subnet_mgmt" {
     name                              = "${var.name}-mgmt-subnet"
     resource_group_name               = "${data.azurerm_resource_group.rg.name}"
@@ -20,3 +21,4 @@ resource "azurerm_subnet" "subnet_mgmt" {
         ignore_changes                = ["route_table_id", "network_security_group_id"]
     }
 }
+*/
