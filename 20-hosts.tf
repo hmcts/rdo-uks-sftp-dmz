@@ -77,7 +77,7 @@ resource "azurerm_virtual_machine" "dmz" {
 
 }
 
-/*
+
 # 
 # https://raw.githubusercontent.com/hmcts/rdo-uks-sftp-dmz/master/scripts/ConfigureRemotingForAnsible.ps1?token=AA5K2ONGTU65L2UYJMTNMCS5IQHUE
 
@@ -102,7 +102,7 @@ resource "azurerm_virtual_machine_extension" "dmz" {
     SETTINGS
 }
 
-
+/*
 data "template_file" "inventory" {
     template = "${file("${path.module}/template/inventory.tpl")}"
 
