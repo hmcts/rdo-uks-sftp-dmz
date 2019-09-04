@@ -18,10 +18,10 @@ resource "azurerm_network_security_rule" "ansible_2_sftp_host" {
 }
 
 
-resource "azurerm_network_security_rule" "ansible_2_sftp_host" {
-  name                                          = "Ansible_to_sftp_hosts"
-  description		                                = "Ansible_to_sftp_hosts"
-  priority                                      = 210
+resource "azurerm_network_security_rule" "ansible_2_mgmt_host" {
+  name                                          = "Ansible_to_mgmt_hosts"
+  description		                                = "Ansible_to_mgmt_hosts"
+  priority                                      = 211
   direction                                     = "Inbound"
   access                                        = "Allow"
   protocol                                      = "*"
