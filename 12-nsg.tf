@@ -18,6 +18,22 @@ resource "azurerm_network_security_rule" "ansible_2_sftp_host" {
 }
 
 
+resource "azurerm_network_security_rule" "ansible_2_sftp_host" {
+  name                                          = "Ansible_to_sftp_hosts"
+  description		                                = "Ansible_to_sftp_hosts"
+  priority                                      = 210
+  direction                                     = "Inbound"
+  access                                        = "Allow"
+  protocol                                      = "*"
+  source_port_range                             = "*"
+  destination_port_range                        = "*"
+  source_address_prefix                         = "${data.azurerm_subnet.subnet-dmz-mgmt.address_prefix}"
+  destination_address_prefix                    = "${data.azurerm_subnet.subnet-dmz-sftp.address_prefix}"
+  resource_group_name                           = "${data.azurerm_resource_group.dmz.name}"
+  network_security_group_name                   = "${data.azurerm_network_security_group.sg-nsg-mgmt.name}"
+}
+
+
 /*
 resource "azurerm_network_security_group" "public_nsg" {
     name                                        = "${var.name}-nsg"
