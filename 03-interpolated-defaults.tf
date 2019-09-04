@@ -68,6 +68,6 @@ data "azurerm_network_security_group" "sg-nsg-mgmt" {
 }
 
 data "azurerm_network_interface" "proxy_private_ip" {
-  name                                      = "acctest-nic"
+  name                                      = "proxy-sbox-nic"
   resource_group_name                       = "${data.azurerm_resource_group.dmz.name}"
 }
