@@ -28,7 +28,7 @@ data "azurerm_resource_group" "hub" {
 }
 
 data "azurerm_network_interface" "palo_ip" {
-  name                                      = "${data.azurerm_resource_group.hub-rg.name}-sbox-nic-transit-private-0"
+  name                                      = "${data.azurerm_resource_group.hub.name}-sbox-nic-transit-private-0"
   resource_group_name                       = "${data.azurerm_resource_group.hub.name}"
 }
 
