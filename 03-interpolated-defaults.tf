@@ -1,26 +1,26 @@
 
 data "azurerm_resource_group" "rg" {
-  name                                = "${var.name}-rg"
+  name                                      = "${var.name}-rg"
 }
  
 data "azurerm_key_vault_secret" "admin-password" {
-name = "admin-password"
-vault_uri = "${var.key_vault_uri}"
+name                                        = "admin-password"
+vault_uri                                   = "${var.key_vault_uri}"
 }
 
 data "azurerm_key_vault_secret" "admin-username" {
-name = "admin-username"
-vault_uri = "${var.key_vault_uri}"
+name                                        = "admin-username"
+vault_uri                                   = "${var.key_vault_uri}"
 }
 
 data "azurerm_key_vault_secret" "smtp_email_address" {
-name = "smtp-email-address"
-vault_uri = "${var.key_vault_uri}"
+name                                        = "smtp-email-address"
+vault_uri                                   = "${var.key_vault_uri}"
 }
 
 data "azurerm_key_vault_secret" "smtp_password" {
-name = "smtp-password"
-vault_uri = "${var.key_vault_uri}"
+name                                        = "smtp-password"
+vault_uri                                   = "${var.key_vault_uri}"
 }
 
 data "azurerm_resource_group" "hub" {
@@ -64,5 +64,10 @@ data "azurerm_network_security_group" "sg-nsg-sftp" {
 
 data "azurerm_network_security_group" "sg-nsg-mgmt" {
   name                                      = "nsg_mgmt"
+  resource_group_name                       = "${data.azurerm_resource_group.dmz.name}"
+}
+
+data "azurerm_network_interface" "proxy_private_ip" {
+  name                                      = "acctest-nic"
   resource_group_name                       = "${data.azurerm_resource_group.dmz.name}"
 }

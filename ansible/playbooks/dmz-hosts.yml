@@ -62,3 +62,6 @@
         state: present
         enabled: yes
         
+    - name: Set a proxy with a specific port with a bypass list
+      win_http_proxy:
+        proxy: '{{ proxy_ip }}:8080'
