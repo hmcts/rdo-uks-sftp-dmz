@@ -95,5 +95,5 @@
       register: changed_proxy
 
     - name: Run netsh set proxy
-      win_command: 'netsh winhttp set proxy proxy-server=\"{{proxy_url}}\" bypass-list=\"{{proxy_bypass_hosts | join("; ")}}\"'
+      win_command: 'netsh winhttp set proxy proxy-server=\"{{proxy_ip}}:8080\" bypass-list=\"{{proxy_bypass_hosts | join("; ")}}\"'
       when: changed_proxy.changed
