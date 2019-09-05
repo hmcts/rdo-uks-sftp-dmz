@@ -59,5 +59,5 @@ data "azurerm_network_interface" "proxy_private_ip" {
 }
 
 locals {
-  default_gateway                           = "${cidrhost(data.azurerm_subnet.ubnet-dmz-sftp.address_prefix,1)}"
+  default_gateway                           = "${cidrhost(data.azurerm_subnet.subnet-dmz-sftp.address_prefix,1)}"
 }
