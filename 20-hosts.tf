@@ -266,7 +266,7 @@ resource "null_resource" "ansible-runs" {
 
   provisioner "remote-exec" {
     inline = [
-      "ansible-playbook -i ~/ansible/inventory ~/ansible/playbooks/dmz-hosts.yml --extra-vars 'smtp_email=${data.azurerm_key_vault_secret.smtp_email_address.value}' --extra-vars 'smtp_pass=${data.azurerm_key_vault_secret.smtp_password.value}' --extra-vars 'proxy_ip=${data.azurerm_network_interface.proxy_private_ip.private_ip_address}' --extra-vars 'proxy_bypass_hosts=10'"
+      "ansible-playbook -i ~/ansible/inventory ~/ansible/playbooks/dmz-hosts.yml --extra-vars 'smtp_email=${data.azurerm_key_vault_secret.smtp_email_address.value}' --extra-vars 'smtp_pass=${data.azurerm_key_vault_secret.smtp_password.value}' --extra-vars 'proxy_ip=${data.azurerm_network_interface.proxy_private_ip.private_ip_address}' --extra-vars 'proxy_bypass_hosts=10' --extra-vars 'gw_address=${local.default_gateway}'"
     ]
 
 

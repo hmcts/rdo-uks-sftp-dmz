@@ -97,3 +97,10 @@
     - name: Run netsh set proxy
       win_command: 'netsh winhttp set proxy proxy-server=\"{{proxy_ip}}:8080\" bypass-list=\"{{proxy_bypass_hosts | join("; ")}}\"'
       when: changed_proxy.changed
+
+    - name: Add a network static route
+      win_route:
+        destination: 0.0.0.0/0
+        gateway: '{{ gw_address }}'
+        metric: 1
+      state: present

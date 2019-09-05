@@ -27,22 +27,8 @@ data "azurerm_resource_group" "hub" {
   name                                      = "hub"
 }
 
-data "azurerm_network_interface" "palo_ip" {
-  name                                      = "${data.azurerm_resource_group.hub.name}-sbox-nic-transit-private-0"
-  resource_group_name                       = "${data.azurerm_resource_group.hub.name}"
-}
-
-locals {
-  palo_ip                                   = "${data.azurerm_network_interface.palo_ip.private_ip_address}"
-}
-
 data "azurerm_resource_group" "dmz" {
   name                                      = "dmz"
-}
-
-data "azurerm_virtual_network" "vnet-dmz" {
-  name                                      = "${data.azurerm_resource_group.dmz.name}-${var.environment}"
-  resource_group_name                       = "${data.azurerm_resource_group.dmz.name}"
 }
 
 data "azurerm_subnet" "subnet-dmz-sftp" {
@@ -70,4 +56,8 @@ data "azurerm_network_security_group" "sg-nsg-mgmt" {
 data "azurerm_network_interface" "proxy_private_ip" {
   name                                      = "proxy-sbox-nic"
   resource_group_name                       = "${data.azurerm_resource_group.dmz.name}"
+}
+
+locals {
+  default_gateway                           = "${cidrhost(data.azurerm_subnet.ubnet-dmz-sftp.address_prefix,1)}"
 }
