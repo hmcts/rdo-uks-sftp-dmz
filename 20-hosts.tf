@@ -231,7 +231,7 @@ resource "azurerm_network_interface" "ansible_server_nic" {
   resource_group_name                       = "${data.azurerm_resource_group.rg.name}"
     ip_configuration {
         name                                = "${var.name}-ansible-ip"
-        subnet_id                           = "${data.azurerm_subnet.subnet-dmz-mgmt.id}"
+        subnet_id                           = "${data.azurerm_subnet.subnet-dmz-sftp.id}"
         private_ip_address_allocation       = "dynamic"
         public_ip_address_id                = "${azurerm_public_ip.pip-ansible.id}"
     }
