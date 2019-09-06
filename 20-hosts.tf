@@ -115,7 +115,7 @@ data "template_file" "inventory" {
     ]
 
     vars = {
-        public_ip = "${join("\n", azurerm_network_interface.data_server_nic.*.private_ip_address)}"  
+        public_ip = "${join("\n", azurerm_network_interface.mgmt_server_nic.*.private_ip_address)}"  
         username = "${data.azurerm_key_vault_secret.admin-username.value}"
         admin_pass = "${data.azurerm_key_vault_secret.admin-password.value}"
     }
