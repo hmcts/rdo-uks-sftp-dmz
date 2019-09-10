@@ -37,7 +37,7 @@ resource "azurerm_network_security_rule" "ansible_2_mgmt_host" {
 resource "azurerm_network_security_rule" "ftp_ftps_21" {
   name                                          = "ftp_ftps_port_21"
   description                                   = "external ftp ftps access to DMZ Gateways"
-  priority                                      = 220
+  priority                                      = 221
   direction                                     = "Inbound"
   access                                        = "Allow"
   protocol                                      = "Tcp"
@@ -52,7 +52,7 @@ resource "azurerm_network_security_rule" "ftp_ftps_21" {
 resource "azurerm_network_security_rule" "sftp_ssh_22" {
   name                                          = "sft_ssh_port_22"
   description                                   = "external sftp_ssh access to DMZ gateway"
-  priority                                      = 122
+  priority                                      = 222
   direction                                     = "Inbound"
   access                                        = "Allow"
   protocol                                      = "Tcp"
@@ -68,7 +68,7 @@ resource "azurerm_network_security_rule" "sftp_ssh_22" {
 resource "azurerm_network_security_rule" "Passive-range" {
   name                                          = "passive-27001-28000"
   description                                   = "external http access to DMZ gateway"
-  priority                                      = 123
+  priority                                      = 223
   direction                                     = "Inbound"
   access                                        = "Allow"
   protocol                                      = "Tcp"
@@ -83,7 +83,7 @@ resource "azurerm_network_security_rule" "Passive-range" {
 resource "azurerm_network_security_rule" "https_443" {
   name                                          = "https_port_443"
   description                                   = "external https access to DMZ gateway"
-  priority                                      = 124
+  priority                                      = 224
   direction                                     = "Inbound"
   access                                        = "Allow"
   protocol                                      = "Tcp"
@@ -98,7 +98,7 @@ resource "azurerm_network_security_rule" "https_443" {
 resource "azurerm_network_security_rule" "port_990" {
   name                                          = "port_990"
   description                                   = "external 990 access to DMZ gateway"
-  priority                                      = 125
+  priority                                      = 225
   direction                                     = "Inbound"
   access                                        = "Allow"
   protocol                                      = "Tcp"
@@ -114,7 +114,7 @@ resource "azurerm_network_security_rule" "port_990" {
 resource "azurerm_network_security_rule" "rdp_admin_to_public_from_office" {
   name                                          = "rdp_admin_to_public_from_office"
   description		                                = "allows RDP"
-  priority                                      = 127
+  priority                                      = 227
   direction                                     = "Inbound"
   access                                        = "Allow"
   protocol                                      = "Tcp"
@@ -129,7 +129,7 @@ resource "azurerm_network_security_rule" "rdp_admin_to_public_from_office" {
 resource "azurerm_network_security_rule" "inbound_44500" {
   name                                          = "44500_port"
   description		                                = "Port between Public and Private"
-  priority                                      = 128
+  priority                                      = 228
   direction                                     = "Inbound"
   access                                        = "Allow"
   protocol                                      = "Tcp"
