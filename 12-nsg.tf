@@ -58,7 +58,6 @@ resource "azurerm_network_security_rule" "sftp_ssh_22" {
   protocol                                      = "Tcp"
   source_port_range                             = "*"
   destination_port_range                        = "22"
-  source_address_prefix                         = "*"
   source_address_prefix                         = "213.121.161.124/32"
   destination_address_prefix                    = "*"
   resource_group_name                           = "${data.azurerm_resource_group.dmz.name}"
