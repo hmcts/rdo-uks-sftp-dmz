@@ -106,5 +106,5 @@
       state: present
 
     - name: Change Route
-      win_command: 'Route change {{ palo_public }} mask 255.255.255.0 {{ gw_address }}'
+      win_command: 'Route change "{{ palo_public }}" mask 255.255.255.0 "{{ gw_address }}"'
       when: changed_proxy.changed
