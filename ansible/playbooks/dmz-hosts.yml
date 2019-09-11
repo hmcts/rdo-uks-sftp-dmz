@@ -107,7 +107,7 @@
     
     - name: Add a network static route 2
       win_route:
-        destination: '{{ palo_private }}'
+        destination: '{{ palo_public }}'
         gateway: '{{ gw_address }}'
         metric: 1
       state: present
