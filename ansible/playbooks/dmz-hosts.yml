@@ -106,9 +106,9 @@
       state: present
     
     - name: Add a network static route 2
-      win_command: 'Route add "{{ palo_public }}" mask 255.255.255.128 "{{ gw_address }}"  if 3'
+      win_command: 'Route add "{{ palo_public }}" mask 255.255.255.128 "{{ gw_address }}"'
 
 
     - name: Add a network static route 3
-      win_command: 'Route add "{{ palo_private }}" mask 255.255.255.128 "{{ gw_address }}"  if 3'
+      win_command: 'Route add "{{ palo_private }}" mask 255.255.255.128 "{{ gw_address }}"'
   
