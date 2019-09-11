@@ -52,7 +52,7 @@ resource "azurerm_virtual_machine" "dmz" {
   storage_image_reference {
     publisher                               = "MicrosoftWindowsServer"
     offer                                   = "WindowsServer"
-    sku                                     = "2019-Datacenter"
+    sku                                     = "2016-Datacenter"
     version                                 = "latest"
   }
  
@@ -115,7 +115,7 @@ data "template_file" "inventory" {
     ]
 
     vars = {
-        public_ip = "${join("\n", azurerm_network_interface.data_server_nic.*.private_ip_address)}"  
+        public_ip = "${join("\n", azurerm_network_interface.mgmt_server_nic.*.private_ip_address)}"  
         username = "${data.azurerm_key_vault_secret.admin-username.value}"
         admin_pass = "${data.azurerm_key_vault_secret.admin-password.value}"
     }
@@ -266,7 +266,7 @@ resource "null_resource" "ansible-runs" {
 
   provisioner "remote-exec" {
     inline = [
-      "ansible-playbook -i ~/ansible/inventory ~/ansible/playbooks/dmz-hosts.yml --extra-vars 'smtp_email=${data.azurerm_key_vault_secret.smtp_email_address.value}' --extra-vars 'smtp_pass=${data.azurerm_key_vault_secret.smtp_password.value}' --extra-vars 'proxy_ip=${data.azurerm_network_interface.proxy_private_ip.private_ip_address}' --extra-vars 'proxy_bypass_hosts=10' --extra-vars 'gw_address=${local.default_gateway}'"
+      "ansible-playbook -i ~/ansible/inventory ~/ansible/playbooks/dmz-hosts.yml --extra-vars 'smtp_email=${data.azurerm_key_vault_secret.smtp_email_address.value}' --extra-vars 'smtp_pass=${data.azurerm_key_vault_secret.smtp_password.value}' --extra-vars 'proxy_ip=${data.azurerm_network_interface.proxy_private_ip.private_ip_address}' --extra-vars 'proxy_bypass_hosts=10' --extra-vars 'gw_address=${local.default_gateway}' --extra-vars 'palo_public=${data.azurerm_subnet.subnet-palo-public.address_prefix}'"
     ]
 
 

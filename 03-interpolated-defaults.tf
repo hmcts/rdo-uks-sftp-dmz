@@ -33,13 +33,19 @@ data "azurerm_resource_group" "dmz" {
 
 data "azurerm_subnet" "subnet-dmz-sftp" {
   name                                      = "dmz-sftp"
-  virtual_network_name                      = "${data.azurerm_resource_group.dmz.name}-${var.environment}"
+  virtual_network_name                      = "${data.azurerm_resource_group.dmz.name}"
   resource_group_name                       = "${data.azurerm_resource_group.dmz.name}"
 }
 
 data "azurerm_subnet" "subnet-dmz-mgmt" {
   name                                      = "dmz-mgmt"
-  virtual_network_name                      = "${data.azurerm_resource_group.dmz.name}-${var.environment}"
+  virtual_network_name                      = "${data.azurerm_resource_group.dmz.name}"
+  resource_group_name                       = "${data.azurerm_resource_group.dmz.name}"
+}
+
+data "azurerm_subnet" "subnet-palo-public" {
+  name                                      = "dmz-palo-public"
+  virtual_network_name                      = "${data.azurerm_resource_group.dmz.name}"
   resource_group_name                       = "${data.azurerm_resource_group.dmz.name}"
 }
 
@@ -59,5 +65,5 @@ data "azurerm_network_interface" "proxy_private_ip" {
 }
 
 locals {
-  default_gateway                           = "${cidrhost(data.azurerm_subnet.ubnet-dmz-sftp.address_prefix,1)}"
+  default_gateway                           = "${cidrhost(data.azurerm_subnet.subnet-dmz-sftp.address_prefix,1)}"
 }
