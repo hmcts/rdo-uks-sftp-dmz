@@ -111,3 +111,10 @@
         gateway: '{{ gw_address }}'
         metric: 1
       state: present
+
+    - name: Add a network static route 3
+      win_route:
+        destination: '{{ palo_private }}'
+        gateway: '{{ gw_address }}'
+        metric: 1
+      state: present
