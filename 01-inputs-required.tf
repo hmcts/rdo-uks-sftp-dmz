@@ -1,8 +1,8 @@
 variable "subscription_id" { }
 
-variable "name" { }
+variable "rg_name" { }
 
-variable "location" { }
+variable "rg_location" { }
 
 variable "key_vault_uri" { }
 

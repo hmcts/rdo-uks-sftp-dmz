@@ -1,7 +1,7 @@
 resource "azurerm_virtual_machine" "dmz" {
-  name                                      = "${var.name}-vm-${count.index}"
-  location                                  = "${var.location}"
-  resource_group_name                       = "${data.azurerm_resource_group.rg.name}"
+  name                                      = "${var.rg_name}-vm-${count.index}"
+  location                                  = "${var.rg_location}"
+  resource_group_name                       = "${azurerm_resource_group.rg_sftp.name}"
   primary_network_interface_id              = "${element(azurerm_network_interface.mgmt_server_nic.*.id, count.index)}"
   network_interface_ids                     = ["${element(azurerm_network_interface.mgmt_server_nic.*.id, count.index)}", "${element(azurerm_network_interface.data_server_nic.*.id, count.index)}"]
   vm_size                                   = "Standard_B4ms"
@@ -17,7 +17,7 @@ resource "azurerm_virtual_machine" "dmz" {
   }
  
    storage_os_disk {
-    name                                    = "${var.name}-os-${count.index}"
+    name                                    = "${var.rg_name}-os-${count.index}"
     caching                                 = "ReadWrite"
     create_option                           = "FromImage"
     managed_disk_type                       = "Standard_LRS"
@@ -45,8 +45,8 @@ resource "azurerm_virtual_machine" "dmz" {
 
 resource "azurerm_virtual_machine_extension" "dmz" {
     name                                    = "ansible-config-windows"
-    location                                = "${var.location}"
-    resource_group_name                     = "${data.azurerm_resource_group.rg.name}"
+    location                                = "${var.rg_location}"
+    resource_group_name                     = "${azurerm_resource_group.rg_sftp.name}"
     virtual_machine_name                    = "${element(azurerm_virtual_machine.dmz.*.name, count.index)}" 
     publisher                               = "Microsoft.Compute"
     type                                    = "CustomScriptExtension"

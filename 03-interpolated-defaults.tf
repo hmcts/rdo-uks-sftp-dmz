@@ -1,6 +1,6 @@
 
 data "azurerm_resource_group" "rg" {
-  name                                      = "${var.name}-rg"
+  name                                      = "${var.rg_name}-rg"
 }
  
 data "azurerm_key_vault_secret" "admin-password" {

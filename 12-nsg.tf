@@ -13,7 +13,7 @@ resource "azurerm_network_security_rule" "ansible_2_sftp_host" {
   destination_port_range                        = "*"
   source_address_prefix                         = "${data.azurerm_subnet.subnet-dmz-mgmt.address_prefix}"
   destination_address_prefix                    = "${data.azurerm_subnet.subnet-dmz-sftp.address_prefix}"
-  resource_group_name                           = "${data.azurerm_resource_group.dmz.name}"
+  resource_group_name                           = "${azurerm_resource_group.rg_sftp.name}"
   network_security_group_name                   = "${data.azurerm_network_security_group.sg-nsg-sftp.name}"
 }
 
@@ -29,7 +29,7 @@ resource "azurerm_network_security_rule" "ansible_2_mgmt_host" {
   destination_port_range                        = "*"
   source_address_prefix                         = "${data.azurerm_subnet.subnet-dmz-mgmt.address_prefix}"
   destination_address_prefix                    = "${data.azurerm_subnet.subnet-dmz-sftp.address_prefix}"
-  resource_group_name                           = "${data.azurerm_resource_group.dmz.name}"
+  resource_group_name                           = "${azurerm_resource_group.rg_sftp.name}"
   network_security_group_name                   = "${data.azurerm_network_security_group.sg-nsg-mgmt.name}"
 }
 
@@ -45,7 +45,7 @@ resource "azurerm_network_security_rule" "ftp_ftps_21" {
   destination_port_range                        = "21"
   source_address_prefix                         = "213.121.161.124/32"
   destination_address_prefix                    = "*"
-  resource_group_name                           = "${data.azurerm_resource_group.dmz.name}"
+  resource_group_name                           = "${azurerm_resource_group.rg_sftp.name}"
   network_security_group_name                   = "${data.azurerm_network_security_group.sg-nsg-sftp.name}"
 }
 
@@ -60,7 +60,7 @@ resource "azurerm_network_security_rule" "sftp_ssh_22" {
   destination_port_range                        = "22"
   source_address_prefix                         = "213.121.161.124/32"
   destination_address_prefix                    = "*"
-  resource_group_name                           = "${data.azurerm_resource_group.dmz.name}"
+  resource_group_name                           = "${azurerm_resource_group.rg_sftp.name}"
   network_security_group_name                   = "${data.azurerm_network_security_group.sg-nsg-sftp.name}"
 }
 
@@ -76,7 +76,7 @@ resource "azurerm_network_security_rule" "Passive-range" {
   destination_port_range                        = "27001-28000"
   source_address_prefix                         = "213.121.161.124/32"
   destination_address_prefix                    = "*"
-  resource_group_name                           = "${data.azurerm_resource_group.dmz.name}"
+  resource_group_name                           = "${azurerm_resource_group.rg_sftp.name}"
   network_security_group_name                   = "${data.azurerm_network_security_group.sg-nsg-sftp.name}"
 }
 
@@ -91,7 +91,7 @@ resource "azurerm_network_security_rule" "https_443" {
   destination_port_range                        = "443"
   source_address_prefix                         = "213.121.161.124/32"
   destination_address_prefix                    = "*"
-  resource_group_name                           = "${data.azurerm_resource_group.dmz.name}"
+  resource_group_name                           = "${azurerm_resource_group.rg_sftp.name}"
   network_security_group_name                   = "${data.azurerm_network_security_group.sg-nsg-sftp.name}"
 }
 
@@ -106,7 +106,7 @@ resource "azurerm_network_security_rule" "port_990" {
   destination_port_range                        = "990"
   source_address_prefix                         = "213.121.161.124/32"
   destination_address_prefix                    = "*"
-  resource_group_name                           = "${data.azurerm_resource_group.dmz.name}"
+  resource_group_name                           = "${azurerm_resource_group.rg_sftp.name}"
   network_security_group_name                   = "${data.azurerm_network_security_group.sg-nsg-sftp.name}"
 }
 
@@ -122,7 +122,7 @@ resource "azurerm_network_security_rule" "rdp_admin_to_public_from_office" {
   destination_port_range                        = "3389"
   source_address_prefix                         = "213.121.161.124/32"
   destination_address_prefix                    = "*"
-  resource_group_name                           = "${data.azurerm_resource_group.dmz.name}"
+  resource_group_name                           = "${azurerm_resource_group.rg_sftp.name}"
   network_security_group_name                   = "${data.azurerm_network_security_group.sg-nsg-sftp.name}"
 }
 
@@ -138,6 +138,6 @@ resource "azurerm_network_security_rule" "inbound_44500" {
   source_address_prefix                         = "VirtualNetwork"
   #source_address_prefix                         = "${azurerm_subnet.subnet_private.address_prefix}"
   destination_address_prefix                    = "VirtualNetwork"
-  resource_group_name                           = "${data.azurerm_resource_group.dmz.name}"
+  resource_group_name                           = "${azurerm_resource_group.rg_sftp.name}"
   network_security_group_name                   = "${data.azurerm_network_security_group.sg-nsg-sftp.name}"
 }
