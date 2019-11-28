@@ -1,22 +1,12 @@
-variable "subscription_id" {
-  description = "Subscription ID to make the changes in"
-}
+variable "subscription_id" { }
 
-variable "name" {
-  description = "Name of Service"  #"__name__"
-}
+variable "name" { }
 
-variable "location" {
-  description = "Location" #"__location__"
-}
+variable "location" { }
 
-variable "key_vault_uri" {
-  description =  "Please use when setup in pipeline" #"https://__name__-kvs.vault.azure.net/"
-}
+variable "key_vault_uri" { }
 
-variable "virtual_machine_name" {
-  description =  "Please use when setup in pipeline" #"__name__-vm"
-}
+variable "virtual_machine_name" { }
 
 variable "vm_count" {
     default = 2
@@ -27,3 +17,5 @@ variable "vnet" {
 }
 
 variable "environment" { }
+
+variable "common_tags" {}
