@@ -8,6 +8,9 @@ variable "rg_location" {
   default   = "uksouth"
 }
 
+variable "common_tags" {}
+
+/*
 variable "key_vault_uri" { }
 
 variable "virtual_machine_name" { }
@@ -19,5 +22,4 @@ variable "vnet" {
 }
 
 variable "environment" { }
-
-variable "common_tags" {}
+*/
