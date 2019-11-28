@@ -10,7 +10,7 @@ variable "rg_location" {
 
 variable "common_tags" {}
 
-/*
+
 variable "key_vault_uri" { }
 
 variable "virtual_machine_name" { }
@@ -22,4 +22,4 @@ variable "vnet" {
 }
 
 variable "environment" { }
-*/
+
