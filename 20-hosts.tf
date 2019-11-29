@@ -24,8 +24,8 @@ resource "azurerm_virtual_machine" "dmz" {
   }
   os_profile {
     computer_name                           = "dmz-${count.index}"
-    admin_username                          = "${data.azurerm_key_vault_secret.admin-username.value}"
-    admin_password                          = "${data.azurerm_key_vault_secret.admin-password.value}"
+    admin_username                          = "${var.admin-username}"
+    admin_password                          = "${var.admin-password}"
   }
 
   os_profile_windows_config {
@@ -77,8 +77,8 @@ data "template_file" "inventory" {
 
     vars = {
         public_ip = "${join("\n", azurerm_network_interface.mgmt_server_nic.*.private_ip_address)}"  
-        username = "${data.azurerm_key_vault_secret.admin-username.value}"
-        admin_pass = "${data.azurerm_key_vault_secret.admin-password.value}"
+        username = "${var.admin-username}"
+        admin_pass = "${var.admin-password}"
     }
 }
 

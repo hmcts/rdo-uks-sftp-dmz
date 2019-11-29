@@ -113,8 +113,8 @@ resource "null_resource" "ansible-runs" {
   
     connection {
       type                                  = "ssh"
-      user                                  = "${data.azurerm_key_vault_secret.admin-username.value}"
-      password                              = "${data.azurerm_key_vault_secret.admin-password.value}"
+      user                                  = "${var.admin-username}"
+      password                              = "${var.admin-password}"
       host                                  = "${azurerm_public_ip.pip-ansible.ip_address}"
     }
   }
@@ -127,8 +127,8 @@ resource "null_resource" "ansible-runs" {
 
     connection {
       type                                  = "ssh"
-      user                                  = "${data.azurerm_key_vault_secret.admin-username.value}"
-      password                              = "${data.azurerm_key_vault_secret.admin-password.value}"
+      user                                  = "${var.admin-username}"
+      password                              = "${var.admin-password}"
       host                                  = "${azurerm_public_ip.pip-ansible.ip_address}"
     }
   }
