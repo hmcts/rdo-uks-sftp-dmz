@@ -23,3 +23,8 @@ variable "vnet" {
 
 variable "environment" { }
 
+
+variable "admin-username" {}
+
+variable "admin-password" {}
+
