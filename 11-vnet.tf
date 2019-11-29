@@ -1,4 +1,4 @@
-resource "azurerm_virtual_network" "vnet_dmz" {
+resource "azurerm_virtual_network" "vnet_sftp" {
   name                            = "${var.vnet_name}"
   location                        = "${azurerm_resource_group.rg_sftp.location}"
   resource_group_name             = "${azurerm_resource_group.rg_sftp.name}"

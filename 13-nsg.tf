@@ -1,6 +1,4 @@
-###
-# NSG for DMZ / Public Access
-###
+
 
 resource "azurerm_network_security_rule" "ansible_2_sftp_host" {
   name                                          = "Ansible_to_sftp_hosts"
@@ -140,4 +138,10 @@ resource "azurerm_network_security_rule" "inbound_44500" {
   destination_address_prefix                    = "VirtualNetwork"
   resource_group_name                           = "${azurerm_resource_group.rg_sftp.name}"
   network_security_group_name                   = "${data.azurerm_network_security_group.sg-nsg-sftp.name}"
+}
+
+
+resource "azurerm_subnet_network_security_group_association" "nsg_sftp" {
+  subnet_id                       = "${azurerm_subnet.subnet-sftp.id}"
+  network_security_group_id       = "${azurerm_network_security_group.nsg_mgmt.id}"
 }
