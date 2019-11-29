@@ -19,15 +19,7 @@ name                                        = "smtp-password"
 vault_uri                                   = "${var.key_vault_uri}"
 }
 
-data "azurerm_network_security_group" "sg-nsg-sftp" {
-  name                                      = "nsg_sftp"
-  resource_group_name                       = "${data.azurerm_resource_group.dmz.name}"
-}
-
-data "azurerm_network_security_group" "sg-nsg-mgmt" {
-  name                                      = "nsg_mgmt"
-  resource_group_name                       = "${data.azurerm_resource_group.dmz.name}"
-}
+/*
 
 data "azurerm_network_interface" "proxy_private_ip" {
   name                                      = "proxy-sbox-nic"
@@ -37,3 +29,4 @@ data "azurerm_network_interface" "proxy_private_ip" {
 locals {
   default_gateway                           = "${cidrhost(data.azurerm_subnet.subnet-dmz-sftp.address_prefix,1)}"
 }
+*/

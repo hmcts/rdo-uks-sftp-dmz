@@ -1,5 +1,6 @@
 
-
+/* 
+# Need to address once backend 
 resource "azurerm_network_security_rule" "ansible_2_sftp_host" {
   name                                          = "Ansible_to_sftp_hosts"
   description		                                = "Ansible_to_sftp_hosts"
@@ -9,8 +10,8 @@ resource "azurerm_network_security_rule" "ansible_2_sftp_host" {
   protocol                                      = "*"
   source_port_range                             = "*"
   destination_port_range                        = "*"
-  source_address_prefix                         = "${data.azurerm_subnet.subnet-dmz-mgmt.address_prefix}"
-  destination_address_prefix                    = "${data.azurerm_subnet.subnet-dmz-sftp.address_prefix}"
+  source_address_prefix                         = "${azurerm_subnet.subnet-dmz-mgmt.address_prefix}"
+  destination_address_prefix                    = "${azurerm_subnet.subnet-dmz-sftp.address_prefix}"
   resource_group_name                           = "${azurerm_resource_group.rg_sftp.name}"
   network_security_group_name                   = "${data.azurerm_network_security_group.sg-nsg-sftp.name}"
 }
@@ -145,3 +146,5 @@ resource "azurerm_subnet_network_security_group_association" "nsg_sftp" {
   subnet_id                       = "${azurerm_subnet.subnet-sftp.id}"
   network_security_group_id       = "${azurerm_network_security_group.nsg_mgmt.id}"
 }
+
+*/
