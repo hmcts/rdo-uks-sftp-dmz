@@ -26,8 +26,8 @@ resource "azurerm_virtual_machine" "ansible-host" {
   
   os_profile {
     computer_name                           = "${var.rg_name}-ansible" 
-    admin_username                          = "${data.azurerm_key_vault_secret.admin-username.value}"
-    admin_password                          = "${data.azurerm_key_vault_secret.admin-password.value}"
+    admin_username                          = "${var.admin-username}"
+    admin_password                          = "${var.admin-password}"
   }
 
 
@@ -37,8 +37,8 @@ provisioner "remote-exec" {
     ]
       connection {
     type                                    = "ssh"
-    user                                    = "${data.azurerm_key_vault_secret.admin-username.value}"
-    password                                = "${data.azurerm_key_vault_secret.admin-password.value}"
+    user                                    = "${var.admin-username}"
+    password                                = "${var.admin-password}"
     host                                    = "${azurerm_public_ip.pip-ansible.ip_address}"
  }
 }
@@ -121,7 +121,7 @@ resource "null_resource" "ansible-runs" {
 
   provisioner "remote-exec" {
     inline = [
-      "ansible-playbook -i ~/ansible/inventory ~/ansible/playbooks/dmz-hosts.yml --extra-vars 'smtp_email=${data.azurerm_key_vault_secret.smtp_email_address.value}' --extra-vars 'smtp_pass=${data.azurerm_key_vault_secret.smtp_password.value}' --extra-vars 'proxy_ip=${data.azurerm_network_interface.proxy_private_ip.private_ip_address}' --extra-vars 'proxy_bypass_hosts=10' --extra-vars 'gw_address=${local.default_gateway}' --extra-vars 'palo_public=${data.azurerm_subnet.subnet-palo-public.address_prefix}' --extra-vars 'palo_private=${data.azurerm_subnet.subnet-palo-private.address_prefix}'"
+      "ansible-playbook -i ~/ansible/inventory ~/ansible/playbooks/dmz-hosts.yml --extra-vars 'smtp_email=${var.smtp_email_address.value}' --extra-vars 'smtp_pass=${var.smtp_password.value}' --extra-vars 'proxy_ip=${data.azurerm_network_interface.proxy_private_ip.private_ip_address}' --extra-vars 'proxy_bypass_hosts=10' --extra-vars 'gw_address=${local.default_gateway}' --extra-vars 'palo_public=${data.azurerm_subnet.subnet-palo-public.address_prefix}' --extra-vars 'palo_private=${data.azurerm_subnet.subnet-palo-private.address_prefix}'"
     ]
 
 
