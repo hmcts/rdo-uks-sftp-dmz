@@ -17,7 +17,7 @@ resource "azurerm_public_ip" "pip-public" {
   count                                     = "${var.vm_count}"
     ip_configuration {
         name                                = "${var.rg_name}-mgmt-ip-${count.index}"
-        subnet_id                           = "${data.azurerm_subnet.subnet-dmz-mgmt.id}"
+        subnet_id                           = "${azurerm_subnet.subnet-sftp.id}"
         private_ip_address_allocation       = "dynamic"
         public_ip_address_id                = "${element(azurerm_public_ip.pip-public.*.id, count.index)}"
     }
@@ -35,7 +35,7 @@ resource "azurerm_network_interface" "data_server_nic" {
   count                                     = "${var.vm_count}"
     ip_configuration {
         name                                = "${var.rg_name}-data-ip-${count.index}"
-        subnet_id                           = "${data.azurerm_subnet.subnet-dmz-sftp.id}"
+        subnet_id                           = "${azurerm_subnet.subnet-sftp.id}"
         private_ip_address_allocation       = "dynamic"
     }
 

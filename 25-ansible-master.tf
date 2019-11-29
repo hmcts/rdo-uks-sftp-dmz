@@ -3,7 +3,7 @@
 resource "azurerm_virtual_machine" "ansible-host" {
   name                                      = "${var.rg_name}-ansible"
   location                                  = "${var.rg_location}"
-  resource_group_name                       = "${data.azurerm_resource_group.rg.name}"
+  resource_group_name                       = "${azurerm_resource_group.rg_sftp.name}"
   network_interface_ids                     = ["${azurerm_network_interface.ansible_server_nic.id}"]
   vm_size                                   = "Standard_B1s"
 
@@ -53,8 +53,8 @@ provisioner "remote-exec" {
 
 resource "azurerm_virtual_machine_extension" "ansible_extension" {
   name                                      = "Ansible-Agent-Install"
-  location                                  = "${var.rg_location}"
-  resource_group_name                       = "${data.azurerm_resource_group.rg.name}"
+  location                                  = "${azurerm_resource_group.rg_sftp.location}"
+  resource_group_name                       = "${azurerm_resource_group.rg_sftp.name}"
   virtual_machine_name                      = "${azurerm_virtual_machine.ansible-host.name}"
   publisher                                 = "Microsoft.Azure.Extensions"
   type                                      = "CustomScript"
@@ -73,7 +73,7 @@ SETTINGS
 resource "azurerm_public_ip" "pip-ansible" {
   name                                      = "${var.rg_name}-ansible-pip"
   location                                  = "${var.rg_location}"
-  resource_group_name                       = "${data.azurerm_resource_group.rg.name}"
+  resource_group_name                       = "${azurerm_resource_group.rg_sftp.name}"
   allocation_method                         = "Static"
 
   tags                                      = var.common_tags
@@ -85,7 +85,7 @@ resource "azurerm_network_interface" "ansible_server_nic" {
   resource_group_name                       = "${azurerm_resource_group.rg_sftp.name}"
     ip_configuration {
         name                                = "${var.rg_name}-ansible-ip"
-        subnet_id                           = "${data.azurerm_subnet.subnet-dmz-mgmt.id}"
+        subnet_id                           = "${azurerm_subnet.subnet-sftp.id}"
         private_ip_address_allocation       = "dynamic"
         public_ip_address_id                = "${azurerm_public_ip.pip-ansible.id}"
     }
