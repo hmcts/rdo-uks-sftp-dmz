@@ -52,7 +52,7 @@ resource "azurerm_virtual_machine_extension" "dmz" {
     type                                    = "CustomScriptExtension"
     depends_on                              = ["azurerm_virtual_machine.dmz"]
     type_handler_version                    = "1.9"
-    count                                   = "${var.vm_count}"
+    count                                   = "${var.environment == "sbox" ? 1 : 0}"
     settings = <<SETTINGS
     {
         "fileUris": [
