@@ -14,3 +14,10 @@ data "azurerm_subnet" "subnet-palo-private" {
   virtual_network_name                      = "${data.azurerm_resource_group.dmz.name}"
   resource_group_name                       = "${data.azurerm_resource_group.dmz.name}"
 }
+
+
+data "azurerm_firewall" "hub-az-firewall" {
+  name                                      = "${var.environment}-uksouth-fw"
+  resource_group_name                       = "hmcts-hub-${var.environment}"
+}
+
