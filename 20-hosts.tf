@@ -5,7 +5,7 @@ resource "azurerm_virtual_machine" "dmz" {
   primary_network_interface_id              = "${element(azurerm_network_interface.mgmt_server_nic.*.id, count.index)}"
   network_interface_ids                     = ["${element(azurerm_network_interface.mgmt_server_nic.*.id, count.index)}", "${element(azurerm_network_interface.data_server_nic.*.id, count.index)}"]
   vm_size                                   = "Standard_B4ms"
-  count                                     = "${var.vm_count}"
+  count                                     = "${var.environment == "sbox" ? 1 : 0}"
   delete_os_disk_on_termination             = true
  
 
