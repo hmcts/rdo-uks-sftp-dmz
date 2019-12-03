@@ -121,7 +121,7 @@ resource "null_resource" "ansible-runs" {
 
   provisioner "remote-exec" {
     inline = [
-      "ansible-playbook -i ~/ansible/inventory ~/ansible/playbooks/dmz-hosts.yml --extra-vars 'smtp_email=${var.smtp_email_address.value}' --extra-vars 'smtp_pass=${var.smtp_password.value}' --extra-vars 'gw_address=${local.default_gateway}' --extra-vars 'palo_public=${data.azurerm_subnet.subnet-palo-public.address_prefix}' --extra-vars 'palo_private=${data.azurerm_subnet.subnet-palo-private.address_prefix}'"
+      "ansible-playbook -i ~/ansible/inventory ~/ansible/playbooks/dmz-hosts.yml --extra-vars 'smtp_email=${var.smtp-email-address}' --extra-vars 'smtp_pass=${var.smtp-password}' --extra-vars 'gw_address=${local.default_gateway}' --extra-vars 'palo_public=${data.azurerm_subnet.subnet-palo-public.address_prefix}' --extra-vars 'palo_private=${data.azurerm_subnet.subnet-palo-private.address_prefix}'"
     ]
 
 

@@ -28,3 +28,6 @@ variable "admin-username" {}
 
 variable "admin-password" {}
 
+variable "smtp-email-address" {}
+
+variable "smtp-password" {}
