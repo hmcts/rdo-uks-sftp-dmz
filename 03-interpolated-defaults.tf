@@ -1,6 +1,6 @@
 
 data "azurerm_resource_group" "dmz" {
-  name                                      = "dmz"
+  name                                      = "hmcts-dmz-${var.environment}"
 }
 
 data "azurerm_subnet" "subnet-palo-public" {
