@@ -31,3 +31,5 @@ variable "admin-password" {}
 variable "smtp-email-address" {}
 
 variable "smtp-password" {}
+
+variable "hub-az-firewall" {}

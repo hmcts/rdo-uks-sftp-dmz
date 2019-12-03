@@ -16,8 +16,4 @@ data "azurerm_subnet" "subnet-palo-private" {
 }
 
 
-data "azurerm_firewall" "hub-az-firewall" {
-  name                                      = "${var.environment}-uksouth-fw"
-  resource_group_name                       = "hmcts-hub-${var.environment}"
-}
 
