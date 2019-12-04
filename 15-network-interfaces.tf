@@ -3,7 +3,7 @@ resource "azurerm_public_ip" "pip-public" {
    location                                 = "${var.rg_location}"
    resource_group_name                      = "${azurerm_resource_group.rg_sftp.name}"
    allocation_method                        = "Static"
-   count                                    = "${var.vm_count}"
+   count                                    = var.environment == "sbox" ? 2 : 0
    tags                                     = var.common_tags
  }
 
@@ -14,7 +14,7 @@ resource "azurerm_public_ip" "pip-public" {
   location                                  = "${var.rg_location}"
   resource_group_name                       = "${azurerm_resource_group.rg_sftp.name}"
   #network_security_group_id                 = "${azurerm_network_security_group.public_nsg.id}"
-  count                                     = "${var.vm_count}"
+  count                                     = var.environment == "sbox" ? 2 : 0
     ip_configuration {
         name                                = "${var.rg_name}-mgmt-ip-${count.index}"
         subnet_id                           = "${azurerm_subnet.subnet-sftp.id}"
@@ -32,7 +32,7 @@ resource "azurerm_network_interface" "data_server_nic" {
   location                                  = "${var.rg_location}"
   resource_group_name                       = "${azurerm_resource_group.rg_sftp.name}"
   #network_security_group_id                 = "${azurerm_network_security_group.public_nsg.id}"
-  count                                     = "${var.vm_count}"
+  count                                     = var.environment == "sbox" ? 2 : 0
     ip_configuration {
         name                                = "${var.rg_name}-data-ip-${count.index}"
         subnet_id                           = "${azurerm_subnet.subnet-sftp.id}"
