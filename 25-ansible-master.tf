@@ -4,7 +4,7 @@ resource "azurerm_virtual_machine" "ansible-host" {
   name                                      = "${var.rg_name}-ansible-${count.index}"
   location                                  = "${var.rg_location}"
   resource_group_name                       = "${azurerm_resource_group.rg_sftp.name}"
-  network_interface_ids                     = ["${element(azurerm_network_interface.ansible_server_nic.*.id, count.index)}"]
+  network_interface_ids                     = ["${azurerm_network_interface.ansible_server_nic.0.id}"]
   vm_size                                   = "Standard_B1s"
   count                                     = var.environment == "sbox" ? 1 : 0
 
@@ -39,7 +39,7 @@ provisioner "remote-exec" {
     type                                    = "ssh"
     user                                    = "${var.admin-username}"
     password                                = "${var.admin-password}"
-    host                                    = "${azurerm_public_ip.pip-ansible.*.ip_address}"
+    host                                    = "${azurerm_public_ip.pip-ansible.0.ip_address}"
  }
 }
 
@@ -89,7 +89,7 @@ resource "azurerm_network_interface" "ansible_server_nic" {
         name                                = "${var.rg_name}-ansible-ip"
         subnet_id                           = "${azurerm_subnet.subnet-sftp.id}"
         private_ip_address_allocation       = "dynamic"
-        public_ip_address_id                = "${element(azurerm_public_ip.pip-ansible.*.id, count.index)}"
+        public_ip_address_id                = "${azurerm_public_ip.pip-ansible.0.id}"
     }
   count                                     = var.environment == "sbox" ? 1 : 0
   tags                                      = var.common_tags
