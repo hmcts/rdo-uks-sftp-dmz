@@ -6,7 +6,7 @@ resource "azurerm_virtual_machine" "ansible-host" {
   resource_group_name                       = "${azurerm_resource_group.rg_sftp.name}"
   network_interface_ids                     = ["${element(azurerm_network_interface.ansible_server_nic.*.id, count.index)}"]
   vm_size                                   = "Standard_B1s"
-    count                                     = var.environment == "sbox" ? 1 : 0
+  count                                     = var.environment == "sbox" ? 1 : 0
 
   delete_os_disk_on_termination             = true
   
@@ -59,6 +59,7 @@ resource "azurerm_virtual_machine_extension" "ansible_extension" {
   publisher                                 = "Microsoft.Azure.Extensions"
   type                                      = "CustomScript"
   type_handler_version                      = "2.0"
+  count                                     = var.environment == "sbox" ? 1 : 0
 
   settings = <<SETTINGS
     {
