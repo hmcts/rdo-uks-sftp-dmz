@@ -100,6 +100,8 @@ resource "null_resource" "ansible-runs" {
       always_run = "${timestamp()}"
     }
 
+  count                                     = var.environment == "sbox" ? 1 : 0
+
     depends_on = [
         "azurerm_virtual_machine_extension.dmz",
         "azurerm_network_interface.ansible_server_nic",
