@@ -4,7 +4,7 @@ resource "azurerm_virtual_machine" "ansible-host" {
   name                                      = "${var.rg_name}-ansible-${count.index}"
   location                                  = "${var.rg_location}"
   resource_group_name                       = "${azurerm_resource_group.rg_sftp.name}"
-  network_interface_ids                     = "${element(azurerm_network_interface.ansible_server_nic.*.id, count.index)}"
+  network_interface_ids                     = ["${element(azurerm_network_interface.ansible_server_nic.*.id, count.index)}"]
   vm_size                                   = "Standard_B1s"
   count                                     = var.environment == "sbox" ? 1 : 0
 
@@ -52,7 +52,7 @@ provisioner "remote-exec" {
 }    
 
 resource "azurerm_virtual_machine_extension" "ansible_extension" {
-  name                                      = "Ansible-Agent-Install"
+  name                                      = "Ansible-Agent-Install-${count.index}"
   location                                  = "${azurerm_resource_group.rg_sftp.location}"
   resource_group_name                       = "${azurerm_resource_group.rg_sftp.name}"
   virtual_machine_name                      = "${element(azurerm_virtual_machine.ansible-host.*.name, count.index)}"
