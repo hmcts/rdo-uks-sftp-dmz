@@ -4,7 +4,7 @@ resource "azurerm_virtual_machine" "ansible-host" {
   name                                      = "${var.rg_name}-ansible"
   location                                  = "${var.rg_location}"
   resource_group_name                       = "${azurerm_resource_group.rg_sftp.name}"
-  network_interface_ids                     = ["${azurerm_network_interface.ansible_server_nic.id}"]
+  network_interface_ids                     = ["${azurerm_network_interface.ansible_server_nic.*.id}"]
   vm_size                                   = "Standard_B1s"
     count                                     = var.environment == "sbox" ? 1 : 0
 
