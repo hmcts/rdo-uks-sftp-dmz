@@ -6,6 +6,7 @@ resource "azurerm_virtual_machine" "ansible-host" {
   resource_group_name                       = "${azurerm_resource_group.rg_sftp.name}"
   network_interface_ids                     = ["${azurerm_network_interface.ansible_server_nic.id}"]
   vm_size                                   = "Standard_B1s"
+  count                                     = var.environment == "sbox" ? 1 : 0
 
 
   delete_os_disk_on_termination             = true
@@ -75,6 +76,7 @@ resource "azurerm_public_ip" "pip-ansible" {
   location                                  = "${var.rg_location}"
   resource_group_name                       = "${azurerm_resource_group.rg_sftp.name}"
   allocation_method                         = "Static"
+  count                                     = var.environment == "sbox" ? 1 : 0
 
   tags                                      = var.common_tags
  }
@@ -89,7 +91,7 @@ resource "azurerm_network_interface" "ansible_server_nic" {
         private_ip_address_allocation       = "dynamic"
         public_ip_address_id                = "${azurerm_public_ip.pip-ansible.id}"
     }
-
+  count                                     = var.environment == "sbox" ? 1 : 0
   tags                                      = var.common_tags
 }
 
