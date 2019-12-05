@@ -116,7 +116,7 @@ resource "null_resource" "ansible-runs" {
       type                                  = "ssh"
       user                                  = "${var.admin-username}"
       password                              = "${var.admin-password}"
-      host                                  = "${azurerm_public_ip.pip-ansible.*.ip_address}"
+      host                                  = "${azurerm_public_ip.pip-ansible.0.ip_address}"
     }
   }
 
@@ -130,7 +130,7 @@ resource "null_resource" "ansible-runs" {
       type                                  = "ssh"
       user                                  = "${var.admin-username}"
       password                              = "${var.admin-password}"
-      host                                  = "${azurerm_public_ip.pip-ansible.*.ip_address}"
+      host                                  = "${azurerm_public_ip.pip-ansible.0.ip_address}"
     }
   }
 }
