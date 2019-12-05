@@ -72,7 +72,7 @@ SETTINGS
 
 
 resource "azurerm_public_ip" "pip-ansible" {
-  name                                      = "${var.rg_name}-ansible-pip"
+  name                                      = "${var.rg_name}-ansible-pip-${count.index}"
   location                                  = "${var.rg_location}"
   resource_group_name                       = "${azurerm_resource_group.rg_sftp.name}"
   allocation_method                         = "Static"
@@ -82,19 +82,18 @@ resource "azurerm_public_ip" "pip-ansible" {
  }
 
 resource "azurerm_network_interface" "ansible_server_nic" {
-  name                                      = "${var.rg_name}-ansible-nic"
+  name                                      = "${var.rg_name}-ansible-nic-${count.index}"
   location                                  = "${var.rg_location}"
   resource_group_name                       = "${azurerm_resource_group.rg_sftp.name}"
     ip_configuration {
         name                                = "${var.rg_name}-ansible-ip"
         subnet_id                           = "${azurerm_subnet.subnet-sftp.id}"
         private_ip_address_allocation       = "dynamic"
-        public_ip_address_id                = "${azurerm_public_ip.pip-ansible.*.id}"
+        public_ip_address_id                = "${element(azurerm_public_ip.pip-ansible.*.id, count.index)}"
     }
   count                                     = var.environment == "sbox" ? 1 : 0
   tags                                      = var.common_tags
 }
-
 
 resource "null_resource" "ansible-runs" {
     triggers = {
