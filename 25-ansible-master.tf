@@ -56,7 +56,7 @@ resource "azurerm_virtual_machine_extension" "ansible_extension" {
   name                                      = "Ansible-Agent-Install"
   location                                  = "${azurerm_resource_group.rg_sftp.location}"
   resource_group_name                       = "${azurerm_resource_group.rg_sftp.name}"
-  virtual_machine_name                      = "${element(azurerm_virtual_machine.ansible-host.*.name, count.index)}"
+  virtual_machine_name                      = "${azurerm_virtual_machine.ansible-host.*.name, count.index}"
   publisher                                 = "Microsoft.Azure.Extensions"
   type                                      = "CustomScript"
   type_handler_version                      = "2.0"
