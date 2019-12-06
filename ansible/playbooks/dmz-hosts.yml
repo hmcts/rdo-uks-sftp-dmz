@@ -62,42 +62,6 @@
         state: present
         enabled: yes
 
-    - name: Registry - ProxySettingsPerUser
-      win_regedit:
-        path: HKLM:\Software\Policies\Microsoft\Windows\CurrentVersion\Internet Settings
-        name: ProxySettingsPerUser
-        data: 0
-        type: dword
-      register: changed_proxy
-
-    - name: Registry - ProxyEnable
-      win_regedit:
-        path: HKLM:\Software\Microsoft\Windows\CurrentVersion\Internet Settings
-        name: ProxyEnable
-        data: 1
-        type: dword
-      register: changed_proxy
-
-    - name: Registry - ProxyServer
-      win_regedit:
-        path: HKLM:\Software\Microsoft\Windows\CurrentVersion\Internet Settings
-        name: ProxyServer
-        data: '{{ proxy_ip }}:8080'
-        type: string
-      register: changed_proxy
-
-    - name: Registry - ProxyOverride
-      win_regedit:
-        path: HKLM:\Software\Microsoft\Windows\CurrentVersion\Internet Settings
-        name: ProxyOverride
-        data: '{{proxy_bypass_hosts | join("; ")}}'
-        type: string
-      register: changed_proxy
-
-    - name: Run netsh set proxy
-      win_command: 'netsh winhttp set proxy proxy-server=\"{{proxy_ip}}:8080\" bypass-list=\"{{proxy_bypass_hosts | join("; ")}}\"'
-      when: changed_proxy.changed
-
     - name: Add a network static route
       win_route:
         destination: 0.0.0.0/0
