@@ -1,116 +1,73 @@
----
-- name: All Hosts
-  hosts: all
-  gather_facts: false
-  tasks:
-    - name: add folder
-      win_file:
-        path: C:\globalscape
-        state: directory
+path: 'C:/globalscape/dmz-gateway-windows-x86-64.exe'
+register: dmz_download
 
-- name: DMZ Hosts
-  hosts: dmz
-  gather_facts: false
-  tasks:
-    - name: Checking DMZ Software is Downloaded
-      win_stat: 
-        path: 'C:/globalscape/dmz-gateway-windows-x86-64.exe' 
-      register: dmz_download
+- name: DMZ software download
+win_get_url:
+  url: ftp://ftp.globalscape.com/bin/files/dmz/dmz-gateway-windows-x86-64.exe
+  dest: C:\globalscape\dmz-gateway-windows-x86-64.exe
+when: dmz_download.stat.exists == False
 
-    - name: DMZ software download
-      win_get_url:
-        url: ftp://ftp.globalscape.com/bin/files/dmz/dmz-gateway-windows-x86-64.exe
-        dest: C:\globalscape\dmz-gateway-windows-x86-64.exe
-      when: dmz_download.stat.exists == False
+- name: Checking DMZ Software is installed
+win_stat:
+  path: 'C:\Program Files\GlobalSCAPE\DMZ Gateway\bin\DMZGatewayServerService.exe'
+register: dmz_installed
 
-    - name: Checking DMZ Software is installed
-      win_stat: 
-        path: 'C:\Program Files\GlobalSCAPE\DMZ Gateway\bin\DMZGatewayServerService.exe' 
-      register: dmz_installed
+- name: Silent Install DMZ Software
+win_package:
+  path: C:\globalscape\dmz-gateway-windows-x86-64.exe
+  product_id: '{9229C8A0-8E85-11DE-94AD-0002A5D5C51B}'
+  arguments: /S
+  state: present
+when: dmz_installed.stat.exists == False
 
-    - name: Silent Install DMZ Software
-      win_package:
-        path: C:\globalscape\dmz-gateway-windows-x86-64.exe
-        product_id: '{9229C8A0-8E85-11DE-94AD-0002A5D5C51B}'
-        arguments: /S
-        state: present
-      when: dmz_installed.stat.exists == False
+- name: Start DMZ Service and set to Auto
+win_service:
+  name: 'DMZ Gateway Server Service'
+  start_mode: auto
+  state: started
 
-    - name: Start DMZ Service and set to Auto
-      win_service:
-        name: 'DMZ Gateway Server Service'
-        start_mode: auto
-        state: started
-        
-    - name: Firewall rule to allow DMZ on TCP port 44500
-      win_firewall_rule:
-        name: DMZ_44500
-        localport: 44500
-        action: allow
-        direction: in
-        protocol: tcp
-        state: present
-        enabled: yes
+- name: Firewall rule to allow DMZ on TCP port 44500
+win_firewall_rule:
+  name: DMZ_44500
+  localport: 44500
+  action: allow
+  direction: in
+  protocol: tcp
+  state: present
+  enabled: yes
 
-    - name: SFTP_Port_22
-      win_firewall_rule:
-        name: SFTP_Port_22
-        localport: 22
-        action: allow
-        direction: in
-        protocol: tcp
-        state: present
-        enabled: yes
+- name: SFTP_Port_22
+win_firewall_rule:
+  name: SFTP_Port_22
+  localport: 22
+  action: allow
+  direction: in
+  protocol: tcp
+  state: present
 
-    - name: Registry - ProxySettingsPerUser
-      win_regedit:
-        path: HKLM:\Software\Policies\Microsoft\Windows\CurrentVersion\Internet Settings
-        name: ProxySettingsPerUser
-        data: 0
-        type: dword
-      register: changed_proxy
+- name: Globalscape_80_81
+win_firewall_rule:
+  name: Globalscape_80_81
+  localport: 80-81
+  action: allow
+  direction: in
+  protocol: tcp
+  state: present
 
-    - name: Registry - ProxyEnable
-      win_regedit:
-        path: HKLM:\Software\Microsoft\Windows\CurrentVersion\Internet Settings
-        name: ProxyEnable
-        data: 1
-        type: dword
-      register: changed_proxy
+- name: Globalscape_443
+win_firewall_rule:
+  name: Globalscape_443
+  localport: 443
+  action: allow
+  direction: in
+  protocol: tcp
+  state: present
 
-    - name: Registry - ProxyServer
-      win_regedit:
-        path: HKLM:\Software\Microsoft\Windows\CurrentVersion\Internet Settings
-        name: ProxyServer
-        data: '{{ proxy_ip }}:8080'
-        type: string
-      register: changed_proxy
-
-    - name: Registry - ProxyOverride
-      win_regedit:
-        path: HKLM:\Software\Microsoft\Windows\CurrentVersion\Internet Settings
-        name: ProxyOverride
-        data: '{{proxy_bypass_hosts | join("; ")}}'
-        type: string
-      register: changed_proxy
-
-    - name: Run netsh set proxy
-      win_command: 'netsh winhttp set proxy proxy-server=\"{{proxy_ip}}:8080\" bypass-list=\"{{proxy_bypass_hosts | join("; ")}}\"'
-      when: changed_proxy.changed
-
-    - name: Add a network static route
-      win_route:
-        destination: 0.0.0.0/0
-        gateway: '{{ gw_address }}'
-        metric: 1
-      state: present
-    
-    - name: Add a network static route 2
-      win_command: 'Route add "{{ palo_public }}" mask 255.255.255.128 "{{ gw_address }}"'
-
-
-    - name: Add a network static route 3
-      win_command: 'Route add "{{ palo_private }}" mask 255.255.255.128 "{{ gw_address }}"'
-  
-    - name: Add a network static route 4
-      win_command: 'Route add 10.0.0.0/0 mask 255.0.0.0 "{{ gw_address }}"'
+- name: Globalscape_2200_2202
+win_firewall_rule:
+  name: Globalscape_2200
+  localport: 2200-2202
+  action: allow
+  direction: in
+  protocol: tcp
+  state: present
